@@ -19,6 +19,10 @@ config/name="Ninja Hosepipe (GWJ5)"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Get="*res://Autoload/Get.tscn"
+
 [input]
 
 player_move_left={

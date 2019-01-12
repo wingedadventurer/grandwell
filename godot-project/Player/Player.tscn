@@ -11,7 +11,9 @@
 
 extents = Vector2( 8, 16 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true

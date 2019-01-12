@@ -47,7 +47,6 @@ visible = false
 shape = SubResource( 1 )
 
 [node name="Ledge" type="Sprite" parent="."]
-editor/display_folded = true
 modulate = Color( 0.203922, 0.176471, 0.137255, 1 )
 position = Vector2( 48, 16 )
 texture = ExtResource( 1 )
@@ -60,7 +59,6 @@ __meta__ = {
 [node name="StaticBody" type="StaticBody2D" parent="Ledge"]
 
 [node name="Collision" type="CollisionShape2D" parent="Ledge/StaticBody"]
-visible = false
 position = Vector2( 0, -3 )
 shape = SubResource( 2 )
 one_way_collision = true
