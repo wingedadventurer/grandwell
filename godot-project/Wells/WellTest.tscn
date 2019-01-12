@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Well/Well.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Well/Tileset/Tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Well/Tileset/TilesetPlatforms.tres" type="TileSet" id=3]
 [ext_resource path="res://Well/Platform/Platform.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=5]
 
 [node name="WellTest" index="0" instance=ExtResource( 1 )]
 
@@ -40,159 +41,63 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Player" parent="." index="3" instance=ExtResource( 3 )]
-position = Vector2( -120, 192 )
+[node name="Platforms" type="TileMap" parent="." index="3"]
+scale = Vector2( 2, 2 )
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 12, 12 )
+format = 1
+tile_data = PoolIntArray( 720893, 8, 0, 720894, 15, 0, 720895, 14, 0, 655360, 15, 0, 655361, 15, 0, 655362, 9, 0, 917497, 8, 0, 917498, 15, 0, 917499, 15, 0, 917500, 14, 0, 917501, 15, 0, 917502, 14, 0, 917503, 14, 0, 851968, 15, 0, 851969, 15, 0, 851970, 15, 0, 851971, 14, 0, 851972, 14, 0, 851973, 15, 0, 851974, 9, 0, 1048573, 16, 0, 1048574, 17, 0, 1114109, 10, 0, 1114110, 11, 0, 1245180, 16, 0, 1245181, 17, 0, 1310716, 10, 0, 1310717, 11, 0, 1507321, 8, 0, 1507322, 15, 0, 1507323, 15, 0, 1507324, 13, 0, 1703939, 12, 0, 1703940, 14, 0, 1703941, 15, 0, 1703942, 9, 0, 1900541, 16, 0, 1900542, 17, 0, 1966077, 10, 0, 1966078, 11, 0, 1966082, 16, 0, 1966083, 17, 0, 2031618, 10, 0, 2031619, 11, 0, 2359298, 16, 0, 2359301, 17, 0, 2424834, 10, 0, 2424835, 15, 0, 2424836, 14, 0, 2424837, 11, 0, 2686968, 8, 0, 2686969, 13, 0, 2621446, 12, 0, 2621447, 9, 0 )
 
-[node name="Platforms" type="Node2D" parent="." index="4"]
+[node name="PlatformsCollisions" type="Node2D" parent="." index="4"]
+editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Platform12" parent="Platforms" index="0" instance=ExtResource( 4 )]
+[node name="Platform12" parent="PlatformsCollisions" index="0" instance=ExtResource( 4 )]
 position = Vector2( -72, 240 )
-type = "LeftStart"
+scale = Vector2( 6, 1 )
 
-[node name="Platform16" parent="Platforms" index="1" instance=ExtResource( 4 )]
-position = Vector2( -48, 240 )
-
-[node name="Platform17" parent="Platforms" index="2" instance=ExtResource( 4 )]
-position = Vector2( -24, 240 )
-
-[node name="Platform18" parent="Platforms" index="3" instance=ExtResource( 4 )]
-position = Vector2( 0, 240 )
-
-[node name="Platform19" parent="Platforms" index="4" instance=ExtResource( 4 )]
-position = Vector2( 24, 240 )
-
-[node name="Platform20" parent="Platforms" index="5" instance=ExtResource( 4 )]
-position = Vector2( 48, 240 )
-type = "RightStart"
-
-[node name="Platform" parent="Platforms" index="6" instance=ExtResource( 4 )]
+[node name="Platform" parent="PlatformsCollisions" index="1" instance=ExtResource( 4 )]
 position = Vector2( -168, 312 )
-type = "LeftStart"
+scale = Vector2( 14, 1 )
 
-[node name="Platform2" parent="Platforms" index="7" instance=ExtResource( 4 )]
-position = Vector2( -144, 312 )
-
-[node name="Platform3" parent="Platforms" index="8" instance=ExtResource( 4 )]
-position = Vector2( -120, 312 )
-
-[node name="Platform4" parent="Platforms" index="9" instance=ExtResource( 4 )]
-position = Vector2( -96, 312 )
-
-[node name="Platform5" parent="Platforms" index="10" instance=ExtResource( 4 )]
-position = Vector2( -72, 312 )
-
-[node name="Platform6" parent="Platforms" index="11" instance=ExtResource( 4 )]
-position = Vector2( -48, 312 )
-
-[node name="Platform7" parent="Platforms" index="12" instance=ExtResource( 4 )]
-position = Vector2( -24, 312 )
-
-[node name="Platform8" parent="Platforms" index="13" instance=ExtResource( 4 )]
-position = Vector2( 0, 312 )
-
-[node name="Platform9" parent="Platforms" index="14" instance=ExtResource( 4 )]
-position = Vector2( 24, 312 )
-
-[node name="Platform10" parent="Platforms" index="15" instance=ExtResource( 4 )]
-position = Vector2( 48, 312 )
-
-[node name="Platform11" parent="Platforms" index="16" instance=ExtResource( 4 )]
-position = Vector2( 72, 312 )
-
-[node name="Platform13" parent="Platforms" index="17" instance=ExtResource( 4 )]
-position = Vector2( 96, 312 )
-
-[node name="Platform14" parent="Platforms" index="18" instance=ExtResource( 4 )]
-position = Vector2( 120, 312 )
-
-[node name="Platform15" parent="Platforms" index="19" instance=ExtResource( 4 )]
-position = Vector2( 144, 312 )
-type = "RightStart"
-
-[node name="Platform22" parent="Platforms" index="20" instance=ExtResource( 4 )]
+[node name="Platform22" parent="PlatformsCollisions" index="2" instance=ExtResource( 4 )]
 position = Vector2( -168, 528 )
-type = "LeftStart"
+scale = Vector2( 4, 1 )
 
-[node name="Platform21" parent="Platforms" index="21" instance=ExtResource( 4 )]
-position = Vector2( -144, 528 )
-
-[node name="Platform23" parent="Platforms" index="22" instance=ExtResource( 4 )]
-position = Vector2( -120, 528 )
-
-[node name="Platform29" parent="Platforms" index="23" instance=ExtResource( 4 )]
+[node name="Platform29" parent="PlatformsCollisions" index="3" instance=ExtResource( 4 )]
 position = Vector2( -96, 456 )
-type = "Left"
+scale = Vector2( 2, 1 )
 
-[node name="Platform41" parent="Platforms" index="24" instance=ExtResource( 4 )]
-position = Vector2( -72, 456 )
-type = "Right"
-
-[node name="Platform42" parent="Platforms" index="25" instance=ExtResource( 4 )]
-position = Vector2( -48, 384 )
-type = "Right"
-
-[node name="Platform30" parent="Platforms" index="26" instance=ExtResource( 4 )]
+[node name="Platform30" parent="PlatformsCollisions" index="4" instance=ExtResource( 4 )]
 position = Vector2( -72, 384 )
-type = "Left"
+scale = Vector2( 2, 1 )
 
-[node name="Platform31" parent="Platforms" index="27" instance=ExtResource( 4 )]
-position = Vector2( 120, 888 )
-type = "Right"
+[node name="Platform38" parent="PlatformsCollisions" index="5" instance=ExtResource( 4 )]
+position = Vector2( 48, 888 )
+scale = Vector2( 4, 1 )
 
-[node name="Platform38" parent="Platforms" index="28" instance=ExtResource( 4 )]
-position = Vector2( 96, 888 )
-type = "Left"
-
-[node name="Platform32" parent="Platforms" index="29" instance=ExtResource( 4 )]
-position = Vector2( 72, 744 )
-type = "Right"
-
-[node name="Platform37" parent="Platforms" index="30" instance=ExtResource( 4 )]
+[node name="Platform37" parent="PlatformsCollisions" index="6" instance=ExtResource( 4 )]
 position = Vector2( 48, 744 )
-type = "Left"
+scale = Vector2( 2, 1 )
 
-[node name="Platform33" parent="Platforms" index="31" instance=ExtResource( 4 )]
+[node name="Platform33" parent="PlatformsCollisions" index="7" instance=ExtResource( 4 )]
 position = Vector2( -72, 696 )
-type = "Left"
+scale = Vector2( 2, 1 )
 
-[node name="Platform36" parent="Platforms" index="32" instance=ExtResource( 4 )]
-position = Vector2( -48, 696 )
-type = "Right"
-
-[node name="Platform34" parent="Platforms" index="33" instance=ExtResource( 4 )]
-position = Vector2( 168, 960 )
-type = "RightStart"
-
-[node name="Platform39" parent="Platforms" index="34" instance=ExtResource( 4 )]
+[node name="Platform39" parent="PlatformsCollisions" index="8" instance=ExtResource( 4 )]
 position = Vector2( 144, 960 )
-type = "Left"
+scale = Vector2( 2, 1 )
 
-[node name="Platform35" parent="Platforms" index="35" instance=ExtResource( 4 )]
+[node name="Platform35" parent="PlatformsCollisions" index="9" instance=ExtResource( 4 )]
 position = Vector2( -192, 960 )
-type = "LeftStart"
+scale = Vector2( 2, 1 )
 
-[node name="Platform40" parent="Platforms" index="36" instance=ExtResource( 4 )]
-position = Vector2( -168, 960 )
-type = "Right"
-
-[node name="Platform24" parent="Platforms" index="37" instance=ExtResource( 4 )]
-position = Vector2( -96, 528 )
-type = "Right"
-
-[node name="Platform26" parent="Platforms" index="38" instance=ExtResource( 4 )]
+[node name="Platform26" parent="PlatformsCollisions" index="10" instance=ExtResource( 4 )]
 position = Vector2( 72, 624 )
-type = "Left"
+scale = Vector2( 4, 1 )
 
-[node name="Platform28" parent="Platforms" index="39" instance=ExtResource( 4 )]
-position = Vector2( 96, 624 )
-
-[node name="Platform27" parent="Platforms" index="40" instance=ExtResource( 4 )]
-position = Vector2( 120, 624 )
-
-[node name="Platform25" parent="Platforms" index="41" instance=ExtResource( 4 )]
-position = Vector2( 144, 624 )
-type = "RightStart"
+[node name="Player" parent="." index="5" instance=ExtResource( 5 )]
+position = Vector2( -120, 192 )
 
