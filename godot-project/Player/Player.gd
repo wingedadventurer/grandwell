@@ -1,9 +1,11 @@
 extends KinematicBody2D
 
+var scene_bomb = preload("res://Bomb/Bomb.tscn")
+
 var MAXIMUM_HORIZONTAL_VELOCITY = 500.0
 var HORIZONTAL_ACCELERATION_ON_GROUND = 4000.0
 var HORIZONTAL_DECELERATION_ON_GROUND = 6000.0
-var JUMP_IMPULSE_VELOCITY_STRENGTH = 700.0
+var JUMP_IMPULSE_VELOCITY_STRENGTH = 750.0 # 700.0
 var GRAVITY_ACCELERATION = 3000.0
 #var GRAVITY_ACCELERATION_DOWN = 3000.0
 #var GRAVITY_ACCELERATION_UP = 2000.0
@@ -21,6 +23,11 @@ func _process(delta):
 	if Input.is_action_just_pressed("reset"):
 		position = default_position
 		velocity = Vector2()
+	
+	if Input.is_action_just_pressed("player_use"):
+		var bomb = scene_bomb.instance()
+		bomb.position = position
+		get_parent().add_child(bomb)
 
 func _physics_process(delta):
 	# calculating horizontal velocity

@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Rectangle.png-b07d0ae1e504ef68544c3751ce8e1e23.stex"
+path="res://.import/Bomb.png-1c4e2711837dc6e1351c3334b52d73bd.stex"
 
 [deps]
 
-source_file="res://Well/Rectangle.png"
-dest_files=[ "res://.import/Rectangle.png-b07d0ae1e504ef68544c3751ce8e1e23.stex" ]
+source_file="res://Bomb/Bomb.png"
+dest_files=[ "res://.import/Bomb.png-1c4e2711837dc6e1351c3334b52d73bd.stex" ]
 
 [params]
 
