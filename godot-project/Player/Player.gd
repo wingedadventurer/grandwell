@@ -10,15 +10,15 @@ var MAXIMUM_VERTICAL_VELOCITY = 900.0
 var JUMP_IMPULSE_VELOCITY_STRENGTH = 550.0
 var GRAVITY_ACCELERATION_DOWN = 3000.0
 var GRAVITY_ACCELERATION_UP = 1450.0
+var COYOTE_TIME = 0.06
 
-var velocity
+var velocity = Vector2()
 var default_position
-var on_floor_last
+var on_floor_last = false
+var coyote_time = 0.0
 
 func _ready():
-	velocity = Vector2()
 	default_position = position
-	on_floor_last = false
 
 func _process(delta):
 	if Input.is_action_just_pressed("reset"):
@@ -46,6 +46,12 @@ func _physics_process(delta):
 	# limiting horizontal velocity
 	velocity.x = clamp(velocity.x, -MAXIMUM_HORIZONTAL_VELOCITY, MAXIMUM_HORIZONTAL_VELOCITY)
 	
+	# calculating coyote time
+	if is_on_floor(): coyote_time = COYOTE_TIME
+	else:
+		if coyote_time > 0.0: coyote_time -= delta
+	print(coyote_time)
+	
 	# calculating vertical velocity - applying gravity
 	# (varied based on current vertical velocity)
 	if velocity.y <= 0 and Input.is_action_pressed("player_jump"): velocity.y += GRAVITY_ACCELERATION_UP * delta
@@ -56,10 +62,10 @@ func _physics_process(delta):
 		if is_on_floor():
 			if Input.is_action_pressed("player_move_down"):
 				position.y += 1
-				$Drop.play() # also plays when on ordinary floor!
+#				$Drop.play() # also plays when on ordinary floor!
 			else:
-				velocity.y = -JUMP_IMPULSE_VELOCITY_STRENGTH
-				$Jump.play()
+				jump()
+		elif coyote_time > 0.0: jump()
 	
 	# limiting vertical velocity
 	velocity.y = clamp(velocity.y, -MAXIMUM_VERTICAL_VELOCITY, MAXIMUM_VERTICAL_VELOCITY)
@@ -70,6 +76,11 @@ func _physics_process(delta):
 		if on_floor_last == false:
 			$Land.play()
 		on_floor_last = is_on_floor()
+
+func jump():
+	velocity.y = -JUMP_IMPULSE_VELOCITY_STRENGTH
+	$Jump.play()
+	coyote_time = 0.0
 
 func drop_bomb():
 	var bomb = scene_bomb.instance()
