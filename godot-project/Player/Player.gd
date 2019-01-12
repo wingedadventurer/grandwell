@@ -5,10 +5,11 @@ var scene_bomb = preload("res://Bomb/Bomb.tscn")
 var MAXIMUM_HORIZONTAL_VELOCITY = 500.0
 var HORIZONTAL_ACCELERATION_ON_GROUND = 4000.0
 var HORIZONTAL_DECELERATION_ON_GROUND = 6000.0
-var JUMP_IMPULSE_VELOCITY_STRENGTH = 750.0 # 700.0
-var GRAVITY_ACCELERATION = 3000.0
-#var GRAVITY_ACCELERATION_DOWN = 3000.0
-#var GRAVITY_ACCELERATION_UP = 2000.0
+
+var MAXIMUM_VERTICAL_VELOCITY = 900.0
+var JUMP_IMPULSE_VELOCITY_STRENGTH = 550.0
+var GRAVITY_ACCELERATION_DOWN = 3000.0
+var GRAVITY_ACCELERATION_UP = 1450.0
 
 var velocity
 var default_position
@@ -25,9 +26,7 @@ func _process(delta):
 		velocity = Vector2()
 	
 	if Input.is_action_just_pressed("player_use"):
-		var bomb = scene_bomb.instance()
-		bomb.position = position
-		get_parent().add_child(bomb)
+		drop_bomb()
 
 func _physics_process(delta):
 	# calculating horizontal velocity
@@ -44,15 +43,13 @@ func _physics_process(delta):
 		else:
 			velocity.x = 0
 	
+	# limiting horizontal velocity
 	velocity.x = clamp(velocity.x, -MAXIMUM_HORIZONTAL_VELOCITY, MAXIMUM_HORIZONTAL_VELOCITY)
-
-	# calculating vertical velocity - applying gravity
-	velocity.y += GRAVITY_ACCELERATION * delta
 	
-	# calculating vertical velocity - applying gravity (varied based on vertical velocity)
-	# TODO
-#	if velocity.y > 0: velocity.y += GRAVITY_ACCELERATION_DOWN * delta
-#	else: velocity.y += GRAVITY_ACCELERATION_UP * delta
+	# calculating vertical velocity - applying gravity
+	# (varied based on current vertical velocity)
+	if velocity.y <= 0 and Input.is_action_pressed("player_jump"): velocity.y += GRAVITY_ACCELERATION_UP * delta
+	else: velocity.y += GRAVITY_ACCELERATION_DOWN * delta
 	
 	# calculating vertical velocity - jumping
 	if Input.is_action_just_pressed("player_jump"):
@@ -64,9 +61,18 @@ func _physics_process(delta):
 				velocity.y = -JUMP_IMPULSE_VELOCITY_STRENGTH
 				$Jump.play()
 	
+	# limiting vertical velocity
+	velocity.y = clamp(velocity.y, -MAXIMUM_VERTICAL_VELOCITY, MAXIMUM_VERTICAL_VELOCITY)
+	
 	# moving
 	velocity = move_and_slide(velocity, Vector2(0, -1))
 	if on_floor_last != is_on_floor():
 		if on_floor_last == false:
 			$Land.play()
 		on_floor_last = is_on_floor()
+
+func drop_bomb():
+	var bomb = scene_bomb.instance()
+	bomb.position = position
+	get_parent().add_child(bomb)
+	$BombDrop.play()
