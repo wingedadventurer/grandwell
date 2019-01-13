@@ -19,8 +19,8 @@ func _process(delta):
 		position.y = lerp(position.y, player.position.y, PLAYER_VERTICAL_FOLLOW_LERP_WEIGHT)
 	
 	# pan with up and down keys (TEMP)
-	if Input.is_action_just_pressed("player_move_up"): pan_up()
-	elif Input.is_action_just_pressed("player_move_down"): pan_down()
+#	if Input.is_action_just_pressed("player_move_up"): pan_up()
+#	elif Input.is_action_just_pressed("player_move_down"): pan_down()
 
 func pan_down():
 	$Tween.interpolate_property(self, "offset:y", offset.y, PAN_AMOUNT, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)

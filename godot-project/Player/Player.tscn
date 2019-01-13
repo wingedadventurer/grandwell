@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
@@ -10,6 +10,14 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 extents = Vector2( 8, 16 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+extents = Vector2( 7, 4 )
+
+[sub_resource type="RectangleShape2D" id=4]
+
+extents = Vector2( 7, 4 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
@@ -44,4 +52,24 @@ bus = "SFX"
 [node name="BombDrop" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 bus = "SFX"
+
+[node name="LadderCheckUp" type="Area2D" parent="."]
+editor/display_folded = true
+position = Vector2( 0, -4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collision" type="CollisionShape2D" parent="LadderCheckUp"]
+shape = SubResource( 3 )
+
+[node name="LadderCheckDown" type="Area2D" parent="."]
+editor/display_folded = true
+position = Vector2( 0, 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collision" type="CollisionShape2D" parent="LadderCheckDown"]
+shape = SubResource( 4 )
 

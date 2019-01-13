@@ -6,7 +6,10 @@
 
 extents = Vector2( 12, 8 )
 
-[node name="Platform" type="StaticBody2D"]
+[node name="Platform" type="StaticBody2D" groups=[
+"platform",
+]]
+collision_mask = 0
 script = ExtResource( 1 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
