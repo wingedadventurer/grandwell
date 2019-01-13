@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Tileset.png-1e8ce37dfc70f7f71d433e05713a5fdb.stex"
+path="res://.import/Tileset.png-a1782e200e3deee31deb9f9f4ad6f4bc.stex"
 
 [deps]
 
-source_file="res://Well/Tileset/Tileset.png"
-dest_files=[ "res://.import/Tileset.png-1e8ce37dfc70f7f71d433e05713a5fdb.stex" ]
+source_file="res://Tilesets/Tileset.png"
+dest_files=[ "res://.import/Tileset.png-a1782e200e3deee31deb9f9f4ad6f4bc.stex" ]
 
 [params]
 

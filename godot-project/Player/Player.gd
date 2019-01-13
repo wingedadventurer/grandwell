@@ -13,11 +13,10 @@ var HORIZONTAL_DECELERATION_ON_GROUND = 6000.0
 
 var MAXIMUM_VERTICAL_VELOCITY = 900.0
 var JUMP_STRENGTH = 550.0
-var JUMP_STRENGTH_ROPE = 400.0
 var GRAVITY_ACCELERATION_DOWN = 3000.0
 var GRAVITY_ACCELERATION_UP = 1450.0
 var COYOTE_TIME = 0.06
-var GRAB_DELAY = 0.15
+var GRAB_DELAY = 0.1
 
 var CLIMB_SPEED = 200.0
 
@@ -37,9 +36,11 @@ func _process(delta):
 		position = default_position
 		velocity = Vector2()
 		state_next = State.Normal
+		Get.camera().pan_down()
 	
 	if Input.is_action_just_pressed("player_use"):
 		drop_bomb()
+		Get.camera().pan_up()
 
 func _physics_process(delta):
 	# states
@@ -105,7 +106,6 @@ func state_normal(delta):
 	Input.is_action_pressed("player_move_down")) and\
 	grab_delay <= 0.0:
 		var top_check = false
-		var ladder
 		for ladder in $LadderCheckUp.get_overlapping_areas():
 			if ladder.is_in_group("ladder"):
 				top_check = true

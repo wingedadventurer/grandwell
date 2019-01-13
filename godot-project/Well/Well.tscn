@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Well/Well.gd" type="Script" id=1]
+[ext_resource path="res://Player/Player.png" type="Texture" id=2]
 
 [node name="Well" type="Node2D" groups=[
 "well",
@@ -9,4 +10,17 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="PlayerSpawn" type="Position2D" parent="."]
+editor/display_folded = true
+z_index = 10
+z_as_relative = false
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="PlayerSpawn"]
+self_modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
 

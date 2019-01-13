@@ -11,11 +11,11 @@
 
 extents = Vector2( 8, 16 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 
 extents = Vector2( 7, 4 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 
 extents = Vector2( 7, 4 )
 
@@ -55,21 +55,23 @@ bus = "SFX"
 
 [node name="LadderCheckUp" type="Area2D" parent="."]
 editor/display_folded = true
+visible = false
 position = Vector2( 0, -4 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Collision" type="CollisionShape2D" parent="LadderCheckUp"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="LadderCheckDown" type="Area2D" parent="."]
 editor/display_folded = true
+visible = false
 position = Vector2( 0, 4 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Collision" type="CollisionShape2D" parent="LadderCheckDown"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
