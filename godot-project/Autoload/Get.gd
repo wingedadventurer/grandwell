@@ -12,3 +12,8 @@ func player():
 
 func main():
 	return get_node("/root/Main")
+
+func level():
+	var nodes = get_tree().get_nodes_in_group("level")
+	if nodes.size() > 0: return nodes[0]
+	else: return null

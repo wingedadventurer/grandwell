@@ -129,4 +129,4 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [connection signal="pressed" from="VBoxContainer/CenterContainer/GridContainer/Level1" to="." method="_on_Level1_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/CenterContainer/ButtonBack" to="VBoxContainer" method="_on_ButtonBack_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CenterContainer/ButtonBack" to="." method="_on_ButtonBack_pressed"]

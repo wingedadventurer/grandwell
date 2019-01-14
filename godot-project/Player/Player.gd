@@ -36,11 +36,9 @@ func _process(delta):
 		position = default_position
 		velocity = Vector2()
 		state_next = State.Normal
-		Get.camera().pan_down()
 	
 	if Input.is_action_just_pressed("player_use"):
 		drop_bomb()
-		Get.camera().pan_up()
 
 func _physics_process(delta):
 	# states
@@ -102,9 +100,7 @@ func state_normal(delta):
 		on_floor_last = is_on_floor()
 	
 	# checking ladders
-	if (Input.is_action_pressed("player_move_up") or\
-	Input.is_action_pressed("player_move_down")) and\
-	grab_delay <= 0.0:
+	if (Input.is_action_pressed("player_move_up")) and grab_delay <= 0.0:
 		var top_check = false
 		for ladder in $LadderCheckUp.get_overlapping_areas():
 			if ladder.is_in_group("ladder"):

@@ -24,3 +24,7 @@ self_modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 
+[node name="Bottom" type="Position2D" parent="."]
+
+[node name="Top" type="Position2D" parent="."]
+
