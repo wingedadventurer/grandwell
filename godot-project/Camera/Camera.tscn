@@ -5,6 +5,8 @@
 [node name="Camera" type="Camera2D" groups=[
 "camera",
 ]]
+pause_mode = 1
+current = true
 drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 script = ExtResource( 1 )

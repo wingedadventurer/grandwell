@@ -17,6 +17,7 @@ func _process(delta):
 	if player != null:
 		position.x = lerp(position.x, player.position.x * PLAYER_HORIZONTAL_FOLLOW_PARALLAX_FACTOR, PLAYER_HORIZONTAL_FOLLOW_LERP_WEIGHT)
 		position.y = lerp(position.y, player.position.y, PLAYER_VERTICAL_FOLLOW_LERP_WEIGHT)
+	print(player)
 	
 	# pan with up and down keys (TEMP)
 #	if Input.is_action_just_pressed("player_move_up"): pan_up()

@@ -3,5 +3,6 @@
 [ext_resource path="res://Autoload/Get.gd" type="Script" id=1]
 
 [node name="Get" type="Node"]
+pause_mode = 2
 script = ExtResource( 1 )
 

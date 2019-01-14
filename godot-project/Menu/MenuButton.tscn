@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Fonts/Button.tres" type="DynamicFont" id=1]
+
+[node name="MenuButton" type="Button"]
+margin_right = 204.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 200, 60 )
+custom_fonts/font = ExtResource( 1 )
+text = "<button>"
+flat = true
+align = 0
+

@@ -1,0 +1,132 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Menu/LevelSelectMenu.gd" type="Script" id=1]
+[ext_resource path="res://Menu/LevelButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Menu/MenuButton.tscn" type="PackedScene" id=3]
+
+[node name="Control" type="Control" groups=[
+"menu",
+]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.25098 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 496.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/CenterContainer"]
+margin_left = 222.0
+margin_top = 178.0
+margin_right = 802.0
+margin_bottom = 318.0
+custom_constants/vseparation = 20
+custom_constants/hseparation = 20
+columns = 5
+
+[node name="Level1" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+text = "1"
+
+[node name="Level2" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 120.0
+margin_right = 220.0
+disabled = true
+text = "2"
+
+[node name="Level3" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 240.0
+margin_right = 340.0
+disabled = true
+text = "3"
+
+[node name="Level4" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 360.0
+margin_right = 460.0
+disabled = true
+text = "4"
+
+[node name="Level5" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 480.0
+margin_right = 580.0
+disabled = true
+text = "5"
+
+[node name="Level6" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+margin_top = 80.0
+margin_bottom = 140.0
+disabled = true
+text = "6"
+
+[node name="Level7" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 220.0
+margin_bottom = 140.0
+disabled = true
+text = "7"
+
+[node name="Level8" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 240.0
+margin_top = 80.0
+margin_right = 340.0
+margin_bottom = 140.0
+disabled = true
+text = "8"
+
+[node name="Level9" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 360.0
+margin_top = 80.0
+margin_right = 460.0
+margin_bottom = 140.0
+disabled = true
+text = "9"
+
+[node name="Level10" parent="VBoxContainer/CenterContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 480.0
+margin_top = 80.0
+margin_right = 580.0
+margin_bottom = 140.0
+disabled = true
+text = "10"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 500.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer"]
+margin_right = 400.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 400, 0 )
+
+[node name="ButtonBack" parent="VBoxContainer/HBoxContainer/CenterContainer" instance=ExtResource( 3 )]
+margin_left = 100.0
+margin_top = 20.0
+margin_right = 300.0
+margin_bottom = 80.0
+text = "Back"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 404.0
+margin_right = 1024.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="pressed" from="VBoxContainer/CenterContainer/GridContainer/Level1" to="." method="_on_Level1_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CenterContainer/ButtonBack" to="VBoxContainer" method="_on_ButtonBack_pressed"]
