@@ -85,5 +85,6 @@ quit={
 
 [rendering]
 
+quality/2d/use_pixel_snap=true
 environment/default_clear_color=Color( 0.466667, 0.627451, 0.803922, 1 )
 environment/default_environment="res://default_env.tres"

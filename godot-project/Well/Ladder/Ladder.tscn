@@ -7,6 +7,7 @@ extents = Vector2( 2, 6 )
 [node name="Ladder" type="Area2D" groups=[
 "ladder",
 ]]
+editor/display_folded = true
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 6 )

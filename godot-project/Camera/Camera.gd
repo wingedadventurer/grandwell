@@ -24,7 +24,7 @@ func _process(delta):
 		$DepthIndicator.visible = true
 		var viewport_size = get_viewport_rect().size * zoom
 		var check_height = viewport_size.y * 0.5 - INDICATOR_CHECK_OFFSET_HEIGHT
-		var indicator_target = level.get_bottom_position()
+		indicator_target = level.get_bottom_position()
 		
 		$DepthIndicator.position = to_local(indicator_target)
 		if indicator_target.y > global_position.y + offset.y + check_height:

@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/LadderTemp.png-1b5b357c1f00a0aec371f4687d69a903.stex"
+path="res://.import/Platform.png-b612c624066f758d1880d8d9ad3013a3.stex"
 
 [deps]
 
-source_file="res://Well/Rope/LadderTemp.png"
-dest_files=[ "res://.import/LadderTemp.png-1b5b357c1f00a0aec371f4687d69a903.stex" ]
+source_file="res://Tilesets and textures/Platform.png"
+dest_files=[ "res://.import/Platform.png-b612c624066f758d1880d8d9ad3013a3.stex" ]
 
 [params]
 
