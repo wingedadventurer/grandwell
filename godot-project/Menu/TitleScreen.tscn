@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Menu/TitleScreen.gd" type="Script" id=1]
+[ext_resource path="res://Menu/TitleMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Menu/SettingsMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Menu/LevelSelectMenu.tscn" type="PackedScene" id=4]
+
+[node name="TitleScreen" type="Node"]
+pause_mode = 2
+script = ExtResource( 1 )
+
+[node name="TitleMenu" parent="." instance=ExtResource( 2 )]
+
+[node name="SettingsMenu" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="LevelSelectMenu" parent="." instance=ExtResource( 4 )]
+visible = false
+

@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+const scene_camera = preload("res://Camera/Camera.tscn")
 var scene_bomb = preload("res://Bomb/Bomb.tscn")
 
 enum State {
@@ -30,6 +31,8 @@ var grab_delay = 0.0
 
 func _ready():
 	default_position = position
+	var camera = scene_camera.instance()
+	get_parent().add_child(camera)
 
 func _process(delta):
 	if Input.is_action_just_pressed("reset"):

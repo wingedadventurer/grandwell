@@ -1,4 +1,6 @@
 extends Control
 
+var parent
+
 func _on_ButtonBack_pressed():
-	Menu.load_title()
+	parent.show_title()

@@ -1,7 +1,10 @@
 extends Node2D
 
+<<<<<<< HEAD
+=======
 export (int) var number # Which level are we currently playing?
 
+>>>>>>> 9de6be267fb8c470e7c7e28d8abcf9a85b9daa30
 const STATE_DESCENT = 0
 const STATE_ESCAPE = 1
 
@@ -10,8 +13,11 @@ var scene_player = preload("res://Player/Player.tscn")
 var scene_ladder = preload("res://Well/Ladder/Ladder.tscn")
 var scene_platform = preload("res://Well/Platform/Platform.tscn")
 
+<<<<<<< HEAD
+=======
 const scene_pause = preload("res://Menu/PauseScreen.tscn")
 
+>>>>>>> 9de6be267fb8c470e7c7e28d8abcf9a85b9daa30
 var state
 
 func _ready():
@@ -55,9 +61,12 @@ func begin_escape():
 func player_escaped():
 	if state == STATE_ESCAPE:
 		print("Level complete")
+<<<<<<< HEAD
+=======
 		LevelLoader.advance_level(number)
 
 func _process(delta):
 	if Input.is_action_pressed("pause"):
 		var pause = scene_pause.instance()
 		add_child(pause)
+>>>>>>> 9de6be267fb8c470e7c7e28d8abcf9a85b9daa30
