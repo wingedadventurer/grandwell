@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Well/Diamond/Diamond.gd" type="Script" id=1]
+[ext_resource path="res://Well/Diamond/Diamond.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+extents = Vector2( 6, 6 )
+
+[node name="Diamond" type="Area2D" groups=[
+"crossing",
+]]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+rotation = 0.785398
+shape = SubResource( 1 )
+
