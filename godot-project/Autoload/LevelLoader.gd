@@ -1,18 +1,26 @@
 extends Node
 
 var levels = {
-	1: "res://Levels/LevelTest.tscn"
+	1: {
+		"scene": "res://Levels/LevelTest.tscn",
+		"next_level": 2
+	},
+	2: {
+		"scene": "res://Levels/Level2.tscn",
+		"next_level": null
+	}
 }
 
-func clear_levels():
-	for level in get_tree().get_nodes_in_group("level"):
-		level.queue_free()
+func get_level_scene(number):
+	return levels[number]["scene"]
+
+func get_next_level_number(number):
+	return levels[number]["next_level"]
 
 func load_level(number):
-	clear_levels()
-	var scene_level = load(levels[number])
-	var level = scene_level.instance()
-	Get.main().add_child(level)
-	Menu.load_title()
-	Menu.hide()
-	MusicPlayer.play_descent()
+	var scene_path = get_level_scene(number)
+	get_tree().change_scene(scene_path)
+
+func advance_level(number):
+	var next_level = get_next_level_number(number)
+	load_level(next_level)

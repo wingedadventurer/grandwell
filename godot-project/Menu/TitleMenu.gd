@@ -1,10 +1,12 @@
 extends Control
 
+var parent
+
 func _on_ButtonPlay_pressed():
-	Menu.load_level_select()
+	parent.show_level_select()
 
 func _on_ButtonSettings_pressed():
-	Menu.load_settings()
+	parent.show_settings()
 
 func _on_ButtonQuit_pressed():
 	get_tree().quit()

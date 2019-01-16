@@ -1,5 +1,7 @@
 extends Node2D
 
+export (int) var number # Which level are we currently playing?
+
 const STATE_DESCENT = 0
 const STATE_ESCAPE = 1
 
@@ -51,3 +53,4 @@ func begin_escape():
 func player_escaped():
 	if state == STATE_ESCAPE:
 		print("Level complete")
+		LevelLoader.advance_level(number)
