@@ -10,6 +10,8 @@ extents = Vector2( 6, 10 )
 [node name="Bomb" type="RigidBody2D" groups=[
 "resettables",
 ]]
+collision_layer = 3
+collision_mask = 3
 mass = 2.04082
 gravity_scale = 5.0
 script = ExtResource( 1 )
