@@ -36,6 +36,8 @@ func _process(delta):
 		position = default_position
 		velocity = Vector2()
 		state_next = State.Normal
+		# Tell the level that we want to reset
+		Get.level().reset()
 	
 	if Input.is_action_just_pressed("player_use"):
 		drop_bomb()

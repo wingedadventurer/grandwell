@@ -12,6 +12,12 @@ func _ready():
 	
 	add_collisions()
 
+func reset():
+	# Reset all 'resettables'
+	var resettables = get_tree().get_nodes_in_group("resettables")
+	for current_resettable in resettables:
+		current_resettable.reset()
+
 func spawn_player():
 	var player = scene_player.instance()
 	player.position = $PlayerSpawn.position
