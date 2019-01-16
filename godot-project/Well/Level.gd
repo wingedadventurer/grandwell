@@ -10,6 +10,8 @@ var scene_player = preload("res://Player/Player.tscn")
 var scene_ladder = preload("res://Well/Ladder/Ladder.tscn")
 var scene_platform = preload("res://Well/Platform/Platform.tscn")
 
+const scene_pause = preload("res://Menu/PauseScreen.tscn")
+
 var state
 
 func _ready():
@@ -54,3 +56,8 @@ func player_escaped():
 	if state == STATE_ESCAPE:
 		print("Level complete")
 		LevelLoader.advance_level(number)
+
+func _process(delta):
+	if Input.is_action_pressed("pause"):
+		var pause = scene_pause.instance()
+		add_child(pause)

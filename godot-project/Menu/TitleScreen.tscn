@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Menu/Menu.gd" type="Script" id=1]
+[ext_resource path="res://Menu/TitleScreen.gd" type="Script" id=1]
 [ext_resource path="res://Menu/TitleMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Menu/SettingsMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Menu/LevelSelectMenu.tscn" type="PackedScene" id=4]
 
-[node name="Menu" type="Node"]
+[node name="TitleScreen" type="Node"]
 pause_mode = 2
 script = ExtResource( 1 )
 
