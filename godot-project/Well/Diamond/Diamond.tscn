@@ -8,7 +8,7 @@
 extents = Vector2( 6, 6 )
 
 [node name="Diamond" type="Area2D" groups=[
-"crossing",
+"diamond",
 ]]
 script = ExtResource( 1 )
 __meta__ = {

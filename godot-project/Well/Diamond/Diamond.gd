@@ -12,3 +12,6 @@ func set_active(value):
 		$Sprite.frame = 1
 	else:
 		$Sprite.frame = 0
+
+func toggle_active():
+	set_active(!active)
