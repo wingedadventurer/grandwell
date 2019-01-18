@@ -24,7 +24,10 @@ var GRAB_DELAY = 0.1
 
 var CLIMB_SPEED = 100.0
 
-var SHOOT_TIME = 0.25
+var SHOOT_TIME = 0.5
+var SHOOT_SLOWMO_AMOUNT = 0.2
+
+var gravity_scale = 1.0
 
 var velocity = Vector2()
 var default_position
@@ -99,8 +102,8 @@ func state_normal(delta):
 	
 	# calculating vertical velocity - applying gravity
 	# (varied based on current vertical velocity)
-	if velocity.y <= 0 and Input.is_action_pressed("player_jump"): velocity.y += GRAVITY_ACCELERATION_UP * delta
-	else: velocity.y += GRAVITY_ACCELERATION_DOWN * delta
+	if velocity.y <= 0 and Input.is_action_pressed("player_jump"): velocity.y += GRAVITY_ACCELERATION_UP * gravity_scale * delta
+	else: velocity.y += GRAVITY_ACCELERATION_DOWN * gravity_scale * delta
 	
 	# calculating vertical velocity - jumping
 	if Input.is_action_just_pressed("player_jump"):
@@ -170,9 +173,19 @@ func state_climbing(delta):
 func state_shooting(delta):
 	# shoot countdown
 	if shoot_time >= 0: shoot_time -= delta
-	else:
+	if shoot_time < 0 or Input.is_action_just_released("player_shoot"):
 		shoot()
+		shoot_time = 0
 		state_next = State.NORMAL
+	
+	# applying gravity
+	if velocity.y <= 0: velocity.y += GRAVITY_ACCELERATION_UP * gravity_scale * delta
+	else: velocity.y += GRAVITY_ACCELERATION_DOWN * gravity_scale * delta
+	
+	# moving
+	velocity = move_and_slide(velocity, Vector2(0, -1))
+	if on_floor_last != is_on_floor():
+		on_floor_last = is_on_floor()
 
 func choose_laserbeam_direction():
 	if Input.is_action_just_pressed("player_move_right"):
@@ -216,9 +229,13 @@ func switch_states():
 		match state_next:
 			State.NORMAL:
 				grab_delay = GRAB_DELAY
+				gravity_scale = 1.0
 			State.CLIMBING:
 				velocity = Vector2()
+				gravity_scale = 1.0
 			State.SHOOTING:
+				velocity *= SHOOT_SLOWMO_AMOUNT
+				gravity_scale = SHOOT_SLOWMO_AMOUNT
 				shoot_time = SHOOT_TIME
 				choose_laserbeam_direction_tick()
 				$Charge.play()
@@ -236,6 +253,7 @@ func shoot():
 	velocity = throw
 	
 	Get.level().add_child(laserbeam)
+	$Charge.stop()
 	$Shot.play()
 
 func jump(var strength):

@@ -19,3 +19,7 @@ func toggle_active():
 	$Toggle.play()
 	
 	Get.level().check_diamonds()
+
+func deactivate():
+	$Collision.disabled = true
+	modulate.a = 0.2

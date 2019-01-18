@@ -42,7 +42,13 @@ func check_diamonds():
 		if diamond.is_in_group("diamond") and\
 		diamond.active == false: return false
 	
+	deactivate_diamonds()
 	begin_escape()
+
+func deactivate_diamonds():
+	for diamond in $Diamonds.get_children():
+		if diamond.is_in_group("diamond"):
+			diamond.deactivate()
 
 func spawn_player():
 	var player = scene_player.instance()
