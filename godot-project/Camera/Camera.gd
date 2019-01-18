@@ -63,7 +63,7 @@ func _process(delta):
 	
 	apply_depth_effects()
 	
-	print(shake_offset)
+	# combine pan and screen shake offsets
 	offset = pan_offset + shake_offset
 
 func shake(time = DEFAULT_SHAKE_TIME, strength = DEFAULT_SHAKE_STRENGTH):

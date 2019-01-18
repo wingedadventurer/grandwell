@@ -32,3 +32,5 @@ shape = SubResource( 1 )
 stream = ExtResource( 3 )
 attenuation = 0.784584
 
+[node name="Tween" type="Tween" parent="."]
+

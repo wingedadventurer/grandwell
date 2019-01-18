@@ -9,25 +9,32 @@ enum State {
 	SHOOTING
 }
 
+# horizontal movement
 var MAXIMUM_HORIZONTAL_VELOCITY = 200.0
 var HORIZONTAL_ACCELERATION_ON_GROUND = 1500.0
 var HORIZONTAL_ACCELERATION_IN_AIR = 400.0
 var HORIZONTAL_DECELERATION_ON_GROUND = 3000.0
 var HORIZONTAL_DECELERATION_IN_AIR = 200.0
 
+# vertical movement
 var MAXIMUM_VERTICAL_VELOCITY = 450.0
 var JUMP_STRENGTH = 275.0
 var GRAVITY_ACCELERATION_DOWN = 1500.0
 var GRAVITY_ACCELERATION_UP = 725.0
 var COYOTE_TIME = 0.06
-var GRAB_DELAY = 0.1
+var GRAVITY_SCALE_DEFAULT = 1.0
+var gravity_scale
 
+# climbing
+var GRAB_DELAY = 0.1
 var CLIMB_SPEED = 100.0
 
+# shooting
 var SHOOT_TIME = 0.5
 var SHOOT_SLOWMO_AMOUNT = 0.2
 
-var gravity_scale = 1.0
+# animation
+var lock_animation = false
 
 var velocity = Vector2()
 var default_position
@@ -41,6 +48,7 @@ var laser_beam_rotation = Vector2(1, 0)
 
 func _ready():
 	default_position = position
+	gravity_scale = GRAVITY_SCALE_DEFAULT
 	var camera = scene_camera.instance()
 	get_parent().add_child(camera)
 
@@ -82,15 +90,23 @@ func state_normal(delta):
 		if velocity.x > -MAXIMUM_HORIZONTAL_VELOCITY:
 			velocity.x -= acceleration_amount
 		$Sprite.scale.x = abs($Sprite.scale.x) * -1
+		if not lock_animation and $Movement.current_animation != "walk": $Movement.play("walk")
 	elif Input.is_action_pressed("player_move_right"):
 		if velocity.x < MAXIMUM_HORIZONTAL_VELOCITY:
 			velocity.x += acceleration_amount
 		$Sprite.scale.x = abs($Sprite.scale.x)
+		if not lock_animation and $Movement.current_animation != "walk": $Movement.play("walk")
 	else:
 		if abs(velocity.x) >= deceleration_amount:
 			velocity.x -= deceleration_amount * sign(velocity.x)
 		else:
 			velocity.x = 0
+		if not lock_animation and $Movement.current_animation != "stand": $Movement.play("stand")
+	
+	# animating if not on floor
+	if not is_on_floor():
+		if velocity.y <= 0: $Movement.play("jump")
+		else: $Movement.play("fall")
 	
 	# calculating coyote time
 	if is_on_floor(): jump_time = COYOTE_TIME
@@ -123,6 +139,9 @@ func state_normal(delta):
 	if on_floor_last != is_on_floor():
 		if on_floor_last == false:
 			$Land.play()
+			if not lock_animation:
+				$Movement.play("land")
+				lock_animation = true
 		on_floor_last = is_on_floor()
 	
 	# checking ladders
@@ -229,10 +248,10 @@ func switch_states():
 		match state_next:
 			State.NORMAL:
 				grab_delay = GRAB_DELAY
-				gravity_scale = 1.0
+				gravity_scale = GRAVITY_SCALE_DEFAULT
 			State.CLIMBING:
 				velocity = Vector2()
-				gravity_scale = 1.0
+				gravity_scale = GRAVITY_SCALE_DEFAULT
 			State.SHOOTING:
 				velocity *= SHOOT_SLOWMO_AMOUNT
 				gravity_scale = SHOOT_SLOWMO_AMOUNT
@@ -261,3 +280,7 @@ func jump(var strength):
 	velocity.y = -strength
 	$Jump.play()
 	jump_time = 0.0
+
+
+func _on_Movement_animation_finished(anim_name):
+	lock_animation = false

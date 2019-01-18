@@ -22,4 +22,5 @@ func toggle_active():
 
 func deactivate():
 	$Collision.disabled = true
-	modulate.a = 0.2
+	$Tween.interpolate_property(self, "modulate:a", modulate.a, 0.2, 1.0, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	$Tween.start()
