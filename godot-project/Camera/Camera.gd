@@ -96,3 +96,7 @@ func pan_down():
 func pan_up():
 	$Tween.interpolate_property(self, "offset:y", offset.y, -PAN_AMOUNT, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$Tween.start()
+
+func remove_pan():
+	$Tween.interpolate_property(self, "offset:y", offset.y, 0, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)
+	$Tween.start()

@@ -9,11 +9,13 @@ func set_active(value):
 	active = value
 	
 	if value == true:
-		$Sprite.frame = 1
-	else:
 		$Sprite.frame = 0
+	else:
+		$Sprite.frame = 1
 
 func toggle_active():
 	set_active(!active)
 	$Toggle.pitch_scale = 0.95 + (randi() % 4) * 0.5
 	$Toggle.play()
+	
+	Get.level().check_diamonds()

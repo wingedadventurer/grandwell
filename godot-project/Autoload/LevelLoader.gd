@@ -13,7 +13,7 @@ var levels = {
 
 func get_level_scene(number):
 	return levels[number]["scene"]
-
+ 
 func get_next_level_number(number):
 	return levels[number]["next_level"]
 

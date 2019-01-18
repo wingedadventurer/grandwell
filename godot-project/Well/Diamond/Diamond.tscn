@@ -21,6 +21,7 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 hframes = 2
+frame = 1
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false

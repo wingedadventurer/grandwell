@@ -21,11 +21,10 @@ func _ready():
 	print("Well \"" + str(name) + "\" Started!")
 	spawn_player()
 	$PlayerSpawn.visible = false
-	state = State.DESCENT
 	add_collisions()
+	state = State.DESCENT
 	MusicPlayer.play_descent()
-	
-	$AscentCheck/Collision.disabled = true
+	Get.camera().pan_down()
 
 func reset():
 	state = State.DESCENT
@@ -34,8 +33,16 @@ func reset():
 	for current_resettable in resettables:
 		current_resettable.reset()
 	
-	$DescentCheck/Collision.disabled = false
-	$AscentCheck/Collision.disabled = true
+	Get.camera().pan_down()
+
+func check_diamonds():
+	if state != State.DISCOVERY: return
+	
+	for diamond in $Diamonds.get_children():
+		if diamond.is_in_group("diamond") and\
+		diamond.active == false: return false
+	
+	begin_escape()
 
 func spawn_player():
 	var player = scene_player.instance()
@@ -57,20 +64,21 @@ func add_collisions():
 		$Collisions.add_child(inst)
 
 func begin_discovery():
-	if state != State.DISCOVERY:
-		print("Discovery phase started")
-		state = State.DISCOVERY
-		MusicPlayer.play_discovery()
+	print("Discovery phase started")
+	state = State.DISCOVERY
+	MusicPlayer.play_discovery()
+	Get.camera().remove_pan()
 
 func begin_escape():
-	if state != State.ASCENT:
-		print("Ascent  phase started")
-		state = State.ASCENT
+	print("Ascent phase started")
+	state = State.ASCENT
+	MusicPlayer.play_ascent()
+	Get.camera().pan_up()
 
 func player_escaped():
-	if state == State.ASCENT:
-		print("Level complete")
-		LevelLoader.advance_level(number)
+	print("Level complete")
+	LevelLoader.advance_level(number)
+	MusicPlayer.stop()
 
 func _process(delta):
 	if Input.is_action_pressed("pause"):
@@ -78,11 +86,9 @@ func _process(delta):
 		add_child(pause)
 
 func _on_DescentCheck_body_entered(body):
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and state == State.DESCENT:
 		begin_discovery()
-		$DescentCheck/Collision.disabled = true
-		$AscentCheck/Collision.disabled = false
 
 func _on_AscentCheck_body_entered(body):
-	if body.is_in_group("player"):
-		$AscentCheck/Collision.disabled = true
+	if body.is_in_group("player") and state == State.ASCENT:
+		player_escaped()
