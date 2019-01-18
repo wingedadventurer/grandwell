@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/land.wav-7692e4f87e9e6e1a3084d879552b60e1.sample"
+path="res://.import/Land.wav-fa031e0d98e075bff80eadf1b3f5f784.sample"
 
 [deps]
 
-source_file="res://Player/land.wav"
-dest_files=[ "res://.import/land.wav-7692e4f87e9e6e1a3084d879552b60e1.sample" ]
+source_file="res://Player/Land.wav"
+dest_files=[ "res://.import/Land.wav-fa031e0d98e075bff80eadf1b3f5f784.sample" ]
 
 [params]
 
@@ -16,6 +16,6 @@ force/mono=false
 force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=true
-edit/normalize=false
+edit/normalize=true
 edit/loop=false
 compress/mode=0

@@ -1,13 +1,12 @@
 extends KinematicBody2D
 
 const scene_camera = preload("res://Camera/Camera.tscn")
-var scene_bomb = preload("res://Bomb/Bomb.tscn")
 var scene_laserbeam = preload("res://Player/LaserBeam/LaserBeam.tscn")
 
 enum State {
-	Normal,
-	Climbing,
-	Shooting
+	NORMAL,
+	CLIMBING,
+	SHOOTING
 }
 
 var MAXIMUM_HORIZONTAL_VELOCITY = 200.0
@@ -25,14 +24,14 @@ var GRAB_DELAY = 0.1
 
 var CLIMB_SPEED = 100.0
 
-var SHOOT_TIME = 0.1
+var SHOOT_TIME = 0.25
 
 var velocity = Vector2()
 var default_position
 var on_floor_last = false
 var jump_time = 0.0
-onready var state = State.Normal
-onready var state_next = State.Normal
+onready var state = State.NORMAL
+onready var state_next = State.NORMAL
 var grab_delay = 0.0
 var shoot_time = 0.0
 var laser_beam_rotation = Vector2(1, 0)
@@ -46,12 +45,9 @@ func _process(delta):
 	if Input.is_action_just_pressed("reset"):
 		position = default_position
 		velocity = Vector2()
-		state_next = State.Normal
+		state_next = State.NORMAL
 		# Tell the level that we want to reset
 		Get.level().reset()
-	
-	if Input.is_action_just_pressed("player_use"):
-		drop_bomb()
 	
 	choose_laserbeam_direction()
 	update()
@@ -59,13 +55,13 @@ func _process(delta):
 func _physics_process(delta):
 	# states
 	match state:
-		State.Normal: state_normal(delta)
-		State.Climbing: state_climbing(delta)
-		State.Shooting: state_shooting(delta)
+		State.NORMAL: state_normal(delta)
+		State.CLIMBING: state_climbing(delta)
+		State.SHOOTING: state_shooting(delta)
 	switch_states()
 
 func _draw():
-	if state == State.Shooting:
+	if state == State.SHOOTING:
 		draw_line(Vector2(), laser_beam_rotation * 20.0, Color(1, 0.2, 0.2, 0.5), 3.0)
 		draw_circle(Vector2(), shoot_time * 30.0 + 10.0, Color(1.0, 0.2, 0.2, 0.5))
 
@@ -93,9 +89,6 @@ func state_normal(delta):
 		else:
 			velocity.x = 0
 	
-	# limiting horizontal velocity
-#	velocity.x = clamp(velocity.x, -MAXIMUM_HORIZONTAL_VELOCITY, MAXIMUM_HORIZONTAL_VELOCITY)
-	
 	# calculating coyote time
 	if is_on_floor(): jump_time = COYOTE_TIME
 	else:
@@ -115,7 +108,6 @@ func state_normal(delta):
 			if Input.is_action_pressed("player_move_down"):
 				position.y += 1
 				grab_delay = GRAB_DELAY
-#				$Drop.play() # also plays when on ordinary floor!
 			else:
 				jump(JUMP_STRENGTH)
 		elif jump_time > 0.0: jump(JUMP_STRENGTH)
@@ -140,13 +132,13 @@ func state_normal(delta):
 		if top_check:
 			for ladder in $LadderCheckDown.get_overlapping_areas():
 				if ladder.is_in_group("ladder"):
-					state_next = State.Climbing
+					state_next = State.CLIMBING
 					position.x = ladder.position.x
 					break
 	
-	# shooting
+	# SHOOTING
 	if Input.is_action_just_pressed("player_shoot") and can_shoot():
-		state_next = State.Shooting
+		state_next = State.SHOOTING
 
 func state_climbing(delta):
 	# calculating velocity (climb if there is more ladder)
@@ -164,23 +156,23 @@ func state_climbing(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision != null:
 		velocity = Vector2()
-		state_next = State.Normal
+		state_next = State.NORMAL
 	
 	if Input.is_action_just_pressed("player_jump"):
 		if not Input.is_action_pressed("player_move_down"):
 			jump(JUMP_STRENGTH)
-		state_next = State.Normal
+		state_next = State.NORMAL
 	
-	# shooting
+	# SHOOTING
 	if Input.is_action_just_pressed("player_shoot") and can_shoot():
-		state_next = State.Shooting
+		state_next = State.SHOOTING
 
 func state_shooting(delta):
 	# shoot countdown
 	if shoot_time >= 0: shoot_time -= delta
 	else:
 		shoot()
-		state_next = State.Normal
+		state_next = State.NORMAL
 
 func choose_laserbeam_direction():
 	if Input.is_action_just_pressed("player_move_right"):
@@ -222,13 +214,14 @@ func choose_laserbeam_direction_tick():
 func switch_states():
 	if state != state_next:
 		match state_next:
-			State.Normal:
+			State.NORMAL:
 				grab_delay = GRAB_DELAY
-			State.Climbing:
+			State.CLIMBING:
 				velocity = Vector2()
-			State.Shooting:
+			State.SHOOTING:
 				shoot_time = SHOOT_TIME
 				choose_laserbeam_direction_tick()
+				$Charge.play()
 		state = state_next
 
 func can_shoot():
@@ -243,14 +236,9 @@ func shoot():
 	velocity = throw
 	
 	Get.level().add_child(laserbeam)
+	$Shot.play()
 
 func jump(var strength):
 	velocity.y = -strength
 	$Jump.play()
 	jump_time = 0.0
-
-func drop_bomb():
-	var bomb = scene_bomb.instance()
-	bomb.position = position
-	get_parent().add_child(bomb)
-	$BombDrop.play()

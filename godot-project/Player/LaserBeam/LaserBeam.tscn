@@ -5,7 +5,7 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 
-extents = Vector2( 150, 6 )
+extents = Vector2( 150, 3 )
 
 [node name="LaserBeam" type="Area2D" groups=[
 "laserbeam",

@@ -15,3 +15,5 @@ func set_active(value):
 
 func toggle_active():
 	set_active(!active)
+	$Toggle.pitch_scale = 0.95 + (randi() % 4) * 0.5
+	$Toggle.play()

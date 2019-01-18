@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
-[ext_resource path="res://Player/jump.wav" type="AudioStream" id=3]
-[ext_resource path="res://Player/land.wav" type="AudioStream" id=4]
-[ext_resource path="res://Player/drop.wav" type="AudioStream" id=5]
-[ext_resource path="res://Player/bomb_drop.wav" type="AudioStream" id=6]
+[ext_resource path="res://Player/Jump.wav" type="AudioStream" id=3]
+[ext_resource path="res://Player/Land.wav" type="AudioStream" id=4]
+[ext_resource path="res://Player/LegBreak.wav" type="AudioStream" id=5]
+[ext_resource path="res://Player/Shot.wav" type="AudioStream" id=6]
+[ext_resource path="res://Player/QuickCharge.wav" type="AudioStream" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -33,28 +34,33 @@ __meta__ = {
 texture = ExtResource( 2 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 1 )
 
 [node name="Jump" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = -3.0
-pitch_scale = 1.5
 bus = "SFX"
 
 [node name="Land" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 bus = "SFX"
 
-[node name="Drop" type="AudioStreamPlayer" parent="."]
+[node name="LegBreak" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 bus = "SFX"
 
-[node name="BombDrop" type="AudioStreamPlayer" parent="."]
+[node name="Shot" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+bus = "SFX"
+
+[node name="Charge" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = 5.0
 bus = "SFX"
 
 [node name="LadderCheckUp" type="Area2D" parent="."]
 editor/display_folded = true
+visible = false
 position = Vector2( 0, -2 )
 __meta__ = {
 "_edit_group_": true
@@ -65,6 +71,7 @@ shape = SubResource( 2 )
 
 [node name="LadderCheckDown" type="Area2D" parent="."]
 editor/display_folded = true
+visible = false
 position = Vector2( 0, 2 )
 __meta__ = {
 "_edit_group_": true

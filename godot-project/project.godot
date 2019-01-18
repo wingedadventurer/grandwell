@@ -28,6 +28,7 @@ MusicPlayer="*res://Autoload/MusicPlayer.tscn"
 [debug]
 
 gdscript/warnings/unused_argument=false
+gdscript/warnings/return_value_discarded=false
 
 [input]
 
