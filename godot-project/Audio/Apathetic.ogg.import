@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Apathetic.ogg-7a7c6d654878573186fc83fb5164e30e.oggstr"
+
+[deps]
+
+source_file="res://Audio/Apathetic.ogg"
+dest_files=[ "res://.import/Apathetic.ogg-7a7c6d654878573186fc83fb5164e30e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

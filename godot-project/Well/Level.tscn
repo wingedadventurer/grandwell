@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Well/Level.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+extents = Vector2( 12, 12 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+extents = Vector2( 12, 12 )
 
 [node name="Level" type="Node2D" groups=[
 "level",
@@ -12,6 +20,7 @@ __meta__ = {
 }
 
 [node name="PlayerSpawn" type="Position2D" parent="."]
+editor/display_folded = true
 z_index = 10
 z_as_relative = false
 __meta__ = {
@@ -26,3 +35,22 @@ texture = ExtResource( 2 )
 
 [node name="Top" type="Position2D" parent="."]
 
+[node name="DescentCheck" type="Area2D" parent="."]
+editor/display_folded = true
+z_index = 60
+z_as_relative = false
+
+[node name="Collision" type="CollisionShape2D" parent="DescentCheck"]
+shape = SubResource( 1 )
+
+[node name="AscentCheck" type="Area2D" parent="."]
+z_index = 60
+z_as_relative = false
+
+[node name="Collision" type="CollisionShape2D" parent="AscentCheck"]
+shape = SubResource( 2 )
+
+[node name="Diamonds" type="Node2D" parent="."]
+
+[connection signal="body_entered" from="DescentCheck" to="." method="_on_DescentCheck_body_entered"]
+[connection signal="body_entered" from="AscentCheck" to="." method="_on_AscentCheck_body_entered"]

@@ -2,9 +2,6 @@ extends Node2D
 
 export (int) var number # Which level are we currently playing?
 
-const STATE_DESCENT = 0
-const STATE_ESCAPE = 1
-
 var scene_player = preload("res://Player/Player.tscn")
 
 var scene_ladder = preload("res://Well/Ladder/Ladder.tscn")
@@ -14,19 +11,31 @@ const scene_pause = preload("res://Menu/PauseScreen.tscn")
 
 var state
 
+enum State {
+	DESCENT,
+	DISCOVERY,
+	ASCENT
+}
+
 func _ready():
 	print("Well \"" + str(name) + "\" Started!")
 	spawn_player()
 	$PlayerSpawn.visible = false
-	state = STATE_DESCENT
+	state = State.DESCENT
 	add_collisions()
+	MusicPlayer.play_descent()
+	
+	$AscentCheck/Collision.disabled = true
 
 func reset():
-	state = STATE_DESCENT
+	state = State.DESCENT
 	# Reset all 'resettables'
 	var resettables = get_tree().get_nodes_in_group("resettables")
 	for current_resettable in resettables:
 		current_resettable.reset()
+	
+	$DescentCheck/Collision.disabled = false
+	$AscentCheck/Collision.disabled = true
 
 func spawn_player():
 	var player = scene_player.instance()
@@ -47,13 +56,19 @@ func add_collisions():
 		inst.position = $Platforms.map_to_world(tile)
 		$Collisions.add_child(inst)
 
+func begin_discovery():
+	if state != State.DISCOVERY:
+		print("Discovery phase started")
+		state = State.DISCOVERY
+		MusicPlayer.play_discovery()
+
 func begin_escape():
-	if state != STATE_ESCAPE:
-		print("Escape phase started")
-		state = STATE_ESCAPE
+	if state != State.ASCENT:
+		print("Ascent  phase started")
+		state = State.ASCENT
 
 func player_escaped():
-	if state == STATE_ESCAPE:
+	if state == State.ASCENT:
 		print("Level complete")
 		LevelLoader.advance_level(number)
 
@@ -61,3 +76,13 @@ func _process(delta):
 	if Input.is_action_pressed("pause"):
 		var pause = scene_pause.instance()
 		add_child(pause)
+
+func _on_DescentCheck_body_entered(body):
+	if body.is_in_group("player"):
+		begin_discovery()
+		$DescentCheck/Collision.disabled = true
+		$AscentCheck/Collision.disabled = false
+
+func _on_AscentCheck_body_entered(body):
+	if body.is_in_group("player"):
+		$AscentCheck/Collision.disabled = true

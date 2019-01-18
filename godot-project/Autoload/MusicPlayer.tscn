@@ -1,12 +1,27 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Autoload/MusicPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Audio/Descent.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Audio/GTHOT.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Audio/Discovery.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Audio/Apathetic.ogg" type="AudioStream" id=5]
 
 [node name="MusicPlayer" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Descent" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+bus = "Music"
+
+[node name="Ascent" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "Music"
+
+[node name="Discovery" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "Music"
+
+[node name="Menu" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
 bus = "Music"
 

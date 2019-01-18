@@ -20,5 +20,6 @@ func show_settings():
 	settings.show()
 
 func _ready():
+	MusicPlayer.play_menu()
 	for next in [title, settings, level_select]:
 		next.parent = self

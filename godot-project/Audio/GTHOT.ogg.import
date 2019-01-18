@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/GTHOT.ogg-2e526a2d60a072947eac4da5266864a7.oggstr"
+
+[deps]
+
+source_file="res://Audio/GTHOT.ogg"
+dest_files=[ "res://.import/GTHOT.ogg-2e526a2d60a072947eac4da5266864a7.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

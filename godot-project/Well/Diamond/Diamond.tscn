@@ -11,6 +11,8 @@ extents = Vector2( 6, 6 )
 [node name="Diamond" type="Area2D" groups=[
 "diamond",
 ]]
+z_index = 120
+z_as_relative = false
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true

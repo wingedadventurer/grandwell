@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Discovery.ogg-4e69159bfe04322e82d6687c208c4505.oggstr"
+
+[deps]
+
+source_file="res://Audio/Discovery.ogg"
+dest_files=[ "res://.import/Discovery.ogg-4e69159bfe04322e82d6687c208c4505.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
