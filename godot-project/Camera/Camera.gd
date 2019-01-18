@@ -1,7 +1,5 @@
 extends Camera2D
 
-var PAN_AMOUNT = 40.0
-var PAN_TIME = 1.0
 var PLAYER_HORIZONTAL_FOLLOW_LERP_WEIGHT = 0.15
 var PLAYER_HORIZONTAL_FOLLOW_PARALLAX_FACTOR = 0.6
 var PLAYER_VERTICAL_FOLLOW_LERP_WEIGHT = 0.05
@@ -16,12 +14,19 @@ var MINIMUM_REVERB_AMOUNT = 0.0
 var MAXIMUM_REVERB_AMOUNT = 0.3
 var REVERB_FACTOR = 0.5
 
+# pan
+var PAN_AMOUNT = 40.0
+var PAN_TIME = 1.0
+var pan_offset = Vector2()
+
+# screen shake
+var DEFAULT_SHAKE_TIME = 0.5
+var DEFAULT_SHAKE_STRENGTH = 10.0
+var shake_time = 0.0
+var shake_strength = 1.0
+var shake_offset = Vector2()
+
 var indicator_target = null
-
-#var offset_screenshake = Vector2() #TODO
-
-#func _ready():
-#	pan_down()
 
 func _process(delta):
 	var level = Get.level()
@@ -51,11 +56,19 @@ func _process(delta):
 		position.x = lerp(position.x, player.position.x * PLAYER_HORIZONTAL_FOLLOW_PARALLAX_FACTOR, PLAYER_HORIZONTAL_FOLLOW_LERP_WEIGHT)
 		position.y = lerp(position.y, player.position.y, PLAYER_VERTICAL_FOLLOW_LERP_WEIGHT)
 	
-	# pan with up and down keys (TEMP)
-#	if Input.is_action_just_pressed("player_move_up"): pan_up()
-#	elif Input.is_action_just_pressed("player_move_down"): pan_down()
+	# shake camera
+	if shake_time > 0:
+		shake_offset = Vector2(1, 1).rotated(deg2rad(rand_range(0, 360.0))) * shake_time * shake_strength
+		shake_time -= delta
 	
 	apply_depth_effects()
+	
+	print(shake_offset)
+	offset = pan_offset + shake_offset
+
+func shake(time = DEFAULT_SHAKE_TIME, strength = DEFAULT_SHAKE_STRENGTH):
+	shake_time = time
+	shake_strength = strength
 
 func apply_depth_effects():
 	var level = Get.level()
@@ -90,13 +103,13 @@ func get_remaining_depth():
 	return distance / 24
 
 func pan_down():
-	$Tween.interpolate_property(self, "offset:y", offset.y, PAN_AMOUNT, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)
+	$Tween.interpolate_property(self, "pan_offset:y", pan_offset.y, PAN_AMOUNT, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$Tween.start()
 
 func pan_up():
-	$Tween.interpolate_property(self, "offset:y", offset.y, -PAN_AMOUNT, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)
+	$Tween.interpolate_property(self, "pan_offset:y", pan_offset.y, -PAN_AMOUNT, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$Tween.start()
 
 func remove_pan():
-	$Tween.interpolate_property(self, "offset:y", offset.y, 0, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)
+	$Tween.interpolate_property(self, "pan_offset:y", pan_offset.y, 0, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$Tween.start()

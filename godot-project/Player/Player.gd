@@ -255,6 +255,7 @@ func shoot():
 	Get.level().add_child(laserbeam)
 	$Charge.stop()
 	$Shot.play()
+	Get.camera().shake()
 
 func jump(var strength):
 	velocity.y = -strength
