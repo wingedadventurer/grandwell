@@ -33,11 +33,10 @@ func _process(delta):
 	var player = Get.player()
 	
 	# depth indicator position
-	if level != null and player != null:
+	if level != null and player != null and indicator_target != null:
 		$DepthIndicator.visible = true
 		var viewport_size = get_viewport_rect().size * zoom
 		var check_height = viewport_size.y * 0.5 - INDICATOR_CHECK_OFFSET_HEIGHT
-		indicator_target = level.get_bottom_position()
 		
 		$DepthIndicator.position = to_local(indicator_target)
 		if indicator_target.y > global_position.y + offset.y + check_height:
@@ -45,7 +44,7 @@ func _process(delta):
 			$DepthIndicator/Label.text = str(get_remaining_depth()).pad_decimals(0) + "m\nv"
 		elif indicator_target.y < global_position.y + offset.y - check_height:
 			$DepthIndicator.position.y = offset.y - check_height + 20.0
-			$DepthIndicator/Label.text = "^\n" + str(get_remaining_depth()).pad_decimals(0)
+			$DepthIndicator/Label.text = "^\n" + str(get_remaining_depth()).pad_decimals(0) + "m"
 		else:
 			$DepthIndicator/Label.text = str(get_remaining_depth()).pad_decimals(0) + "m"
 	else:
@@ -72,14 +71,13 @@ func shake(time = DEFAULT_SHAKE_TIME, strength = DEFAULT_SHAKE_STRENGTH):
 
 func apply_depth_effects():
 	var level = Get.level()
-	if level == null:
+	var player = Get.player()
+	if level == null or player == null:
 		return
 	
 	var depth_scale = 0.0
 	
-	var total_depth = level.get_bottom_position().y / 24
-	var remaining_depth = get_remaining_depth()
-	var current_depth = total_depth - remaining_depth
+	var current_depth = get_depth() / 24
 	
 	if current_depth >= MINIMUM_DEPTH:
 		depth_scale = (current_depth - MINIMUM_DEPTH) / DEPTH_SCALE
@@ -93,14 +91,21 @@ func apply_depth_effects():
 	AudioServer.get_bus_effect(AudioServer.get_bus_index("SFX"), 0).wet = (reverb_amount) * REVERB_FACTOR
 
 func get_remaining_depth():
+	if indicator_target == null: return 0
 	var level = Get.level()
 	var player = Get.player()
 	if level == null or player == null: return
 	var start = player.global_position
-	var end = level.get_bottom_position()
+	var end = indicator_target
 	
 	var distance = end.y - start.y
-	return distance / 24
+	return abs(distance / 24)
+
+func get_depth():
+	var player = Get.player()
+	if player == null: return 0
+	
+	return player.global_position.y
 
 func pan_down():
 	$Tween.interpolate_property(self, "pan_offset:y", pan_offset.y, PAN_AMOUNT, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)

@@ -18,7 +18,6 @@ func get_next_level_number(number):
 	return levels[number]["next_level"]
 
 func load_level(number):
-	MusicPlayer.stop()
 	var scene_path = get_level_scene(number)
 	get_tree().call_deferred("change_scene", scene_path)
 

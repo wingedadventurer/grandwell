@@ -9,7 +9,7 @@
 [ext_resource path="res://Tilesets and textures/Ladders.tres" type="TileSet" id=7]
 [ext_resource path="res://Tilesets and textures/Crystal.tres" type="TileSet" id=8]
 
-[node name="WellTest" instance=ExtResource( 1 )]
+[node name="WellTest" index="0" instance=ExtResource( 1 )]
 pause_mode = 1
 number = 1
 
@@ -17,7 +17,7 @@ number = 1
 position = Vector2( -48, -68 )
 
 [node name="Bottom" parent="." index="1"]
-position = Vector2( 0, 444 )
+position = Vector2( 0, 504 )
 z_index = 50
 z_as_relative = false
 
@@ -30,9 +30,6 @@ z_as_relative = false
 editor/display_folded = false
 position = Vector2( 0, 504 )
 scale = Vector2( 2, 1 )
-
-[node name="Collision" parent="DescentCheck" index="0"]
-position = Vector2( 0, 24 )
 
 [node name="AscentCheck" parent="." index="4"]
 position = Vector2( 0, -48 )

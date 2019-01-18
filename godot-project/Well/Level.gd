@@ -20,11 +20,13 @@ enum State {
 func _ready():
 	print("Well \"" + str(name) + "\" Started!")
 	spawn_player()
-	$PlayerSpawn.visible = false
 	add_collisions()
+	$PlayerSpawn.visible = false
+	
 	state = State.DESCENT
 	MusicPlayer.play_descent()
 	Get.camera().pan_down()
+	Get.camera().indicator_target = get_bottom_position()
 
 func reset():
 	state = State.DESCENT
@@ -34,6 +36,7 @@ func reset():
 		current_resettable.reset()
 	
 	Get.camera().pan_down()
+	Get.camera().indicator_target = get_bottom_position()
 
 func check_diamonds():
 	if state != State.DISCOVERY: return
@@ -55,6 +58,9 @@ func spawn_player():
 	player.position = $PlayerSpawn.position
 	add_child(player)
 
+func get_top_position():
+	return $Top.position
+
 func get_bottom_position():
 	return $Bottom.global_position
 
@@ -74,17 +80,20 @@ func begin_discovery():
 	state = State.DISCOVERY
 	MusicPlayer.play_discovery()
 	Get.camera().remove_pan()
+	Get.camera().indicator_target = null
 
 func begin_escape():
 	print("Ascent phase started")
 	state = State.ASCENT
 	MusicPlayer.play_ascent()
 	Get.camera().pan_up()
+	Get.camera().indicator_target = get_top_position()
 
 func player_escaped():
 	print("Level complete")
 	LevelLoader.advance_level(number)
 	MusicPlayer.stop()
+	Get.camera().indicator_target = null
 
 func _process(delta):
 	if Input.is_action_pressed("pause"):
