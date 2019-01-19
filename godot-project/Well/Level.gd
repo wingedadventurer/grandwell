@@ -102,6 +102,7 @@ func begin_escape():
 	Get.camera().indicator_target = get_top_position()
 	Get.camera().set_zoom_amount(0.3)
 	Get.camera().set_target_player()
+	$WaterLine.rising = true
 
 func player_escaped():
 	print("Level complete")
