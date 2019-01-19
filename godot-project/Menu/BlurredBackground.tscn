@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="Shader" id=1]
+
+code = "shader_type canvas_item;
+
+void fragment() {
+	vec3 image = textureLod(SCREEN_TEXTURE, SCREEN_UV, 3.0).rgb;
+	vec2 center = SCREEN_UV - vec2(0.5, 0.5);
+	center = vec2(abs(center.x), abs(center.y));
+	float vignette = 0.75f - (sqrt(pow(center.x, 2) + pow(center.y, 2)));
+	image.r *= vignette;
+	image.g *= vignette;
+	image.b *= vignette;
+	COLOR.rgb = image;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+
+shader = SubResource( 1 )
+
+[node name="Background" type="ColorRect"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
