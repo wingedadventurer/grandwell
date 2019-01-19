@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Well/WaterLine.gd" type="Script" id=1]
+[ext_resource path="res://Well/Splash.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Well/LeaveWater.ogg" type="AudioStream" id=3]
+
+[sub_resource type="Shader" id=1]
+
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+void fragment() {
+	vec2 mirror = SCREEN_UV;
+	mirror.y = (1.0f - mirror.y);
+	vec3 reflection = textureLod(SCREEN_TEXTURE, mirror, 1.0).rgb;
+	reflection.r *= 0.5f;
+	reflection.g *= 0.75f;
+	reflection.b *= 1.5f;
+	vec3 underwater = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0).rgb;
+	underwater.r *= 0.15f;
+	underwater.g *= 0.5f;
+	underwater.b *= 0.75f;
+	COLOR.rgb = reflection + underwater;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+
+shader = SubResource( 1 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+extents = Vector2( 500, 250 )
+
+[node name="WaterLine" type="Polygon2D" groups=[
+"resettables",
+]]
+material = SubResource( 2 )
+z_index = 1000
+z_as_relative = false
+polygon = PoolVector2Array( -500, 0, 500, 0, 500, 500, -500, 500 )
+script = ExtResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, 250 )
+shape = SubResource( 3 )
+
+[node name="Audio_Splash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "SFX"
+
+[node name="Audio_LeaveWater" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "SFX"
+
+[node name="Timer_Damage" type="Timer" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_body_exited"]
+[connection signal="timeout" from="Timer_Damage" to="." method="_on_Timer_Damage_timeout"]

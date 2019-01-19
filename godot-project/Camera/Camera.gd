@@ -15,7 +15,7 @@ var MAXIMUM_REVERB_AMOUNT = 0.3
 var REVERB_FACTOR = 0.5
 
 # pan
-var PAN_AMOUNT = 40.0
+var PAN_AMOUNT = 20.0
 var PAN_TIME = 1.0
 var pan_offset = Vector2()
 
@@ -25,6 +25,14 @@ var DEFAULT_SHAKE_STRENGTH = 10.0
 var shake_time = 0.0
 var shake_strength = 1.0
 var shake_offset = Vector2()
+
+# zoom
+var zoom_amount_target = 0.33
+var zoom_amount_actual = 0.33
+
+enum Targets { PLAYER, POINT }
+var target_point = null
+var current_target = Targets.PLAYER
 
 var indicator_target = null
 
@@ -51,9 +59,12 @@ func _process(delta):
 		$DepthIndicator.visible = false
 	
 	# follow player
-	if player != null:
+	if current_target == Targets.PLAYER && player != null:
 		position.x = lerp(position.x, player.position.x * PLAYER_HORIZONTAL_FOLLOW_PARALLAX_FACTOR, PLAYER_HORIZONTAL_FOLLOW_LERP_WEIGHT)
 		position.y = lerp(position.y, player.position.y, PLAYER_VERTICAL_FOLLOW_LERP_WEIGHT)
+	elif current_target == Targets.POINT:
+		position.x = lerp(position.x, target_point.position.x, delta)
+		position.y = lerp(position.y, target_point.position.y, delta)
 	
 	# shake camera
 	if shake_time > 0:
@@ -64,6 +75,11 @@ func _process(delta):
 	
 	# combine pan and screen shake offsets
 	offset = pan_offset + shake_offset
+	
+	# adjust zoom amount
+	zoom_amount_actual = lerp(zoom_amount_actual, zoom_amount_target, delta/2)
+	zoom.x = zoom_amount_actual
+	zoom.y = zoom_amount_actual
 
 func shake(time = DEFAULT_SHAKE_TIME, strength = DEFAULT_SHAKE_STRENGTH):
 	shake_time = time
@@ -89,6 +105,10 @@ func apply_depth_effects():
 	# applying reverb
 	var reverb_amount = clamp(depth_scale, MINIMUM_REVERB_AMOUNT, MAXIMUM_REVERB_AMOUNT)
 	AudioServer.get_bus_effect(AudioServer.get_bus_index("SFX"), 0).wet = (reverb_amount) * REVERB_FACTOR
+	
+	# fade out sfx with depth
+	var sfx_volume = clamp(get_remaining_depth(), 0, 15)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), sfx_volume-15)
 
 func get_remaining_depth():
 	if indicator_target == null: return 0
@@ -118,3 +138,13 @@ func pan_up():
 func remove_pan():
 	$Tween.interpolate_property(self, "pan_offset:y", pan_offset.y, 0, PAN_TIME, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$Tween.start()
+
+func set_zoom_amount(amount):
+	zoom_amount_target = amount
+
+func set_target_player():
+	current_target = Targets.PLAYER
+
+func set_target_point(point):
+	current_target = Targets.POINT
+	target_point = point

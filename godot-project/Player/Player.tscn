@@ -20,7 +20,7 @@ extents = Vector2( 4, 2 )
 
 extents = Vector2( 4, 2 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 
 resource_name = "fall"
 length = 0.1
@@ -37,7 +37,7 @@ tracks/0/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 
 resource_name = "jump"
 length = 0.1
@@ -54,7 +54,7 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 
 resource_name = "land"
 length = 0.2
@@ -71,9 +71,8 @@ tracks/0/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 
-resource_name = "stand"
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -88,9 +87,8 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=8]
 
-resource_name = "walk"
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -169,10 +167,13 @@ __meta__ = {
 shape = SubResource( 3 )
 
 [node name="Movement" type="AnimationPlayer" parent="."]
-anims/fall = SubResource( 6 )
-anims/jump = SubResource( 7 )
-anims/land = SubResource( 8 )
-anims/stand = SubResource( 5 )
-anims/walk = SubResource( 4 )
+anims/fall = SubResource( 4 )
+anims/jump = SubResource( 5 )
+anims/land = SubResource( 6 )
+anims/stand = SubResource( 7 )
+anims/walk = SubResource( 8 )
+
+[node name="Timer_Invulnerability" type="Timer" parent="."]
 
 [connection signal="animation_finished" from="Movement" to="." method="_on_Movement_animation_finished"]
+[connection signal="timeout" from="Timer_Invulnerability" to="." method="_on_Timer_Invulnerability_timeout"]
