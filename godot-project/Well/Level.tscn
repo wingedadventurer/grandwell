@@ -63,6 +63,7 @@ shape = SubResource( 2 )
 
 [node name="SpikeStab" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+bus = "SFX"
 
 [connection signal="body_entered" from="DescentCheck" to="." method="_on_DescentCheck_body_entered"]
 [connection signal="body_entered" from="AscentCheck" to="." method="_on_AscentCheck_body_entered"]

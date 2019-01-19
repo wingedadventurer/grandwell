@@ -1,13 +1,14 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
-[ext_resource path="res://Player/Jump.wav" type="AudioStream" id=3]
-[ext_resource path="res://Player/Land.wav" type="AudioStream" id=4]
-[ext_resource path="res://Player/LegBreak.wav" type="AudioStream" id=5]
-[ext_resource path="res://Player/Shot.wav" type="AudioStream" id=6]
-[ext_resource path="res://Player/QuickCharge.wav" type="AudioStream" id=7]
-[ext_resource path="res://Player/Hurt.wav" type="AudioStream" id=8]
+[ext_resource path="res://Player/throw-gun.png" type="Texture" id=3]
+[ext_resource path="res://Player/Jump.wav" type="AudioStream" id=4]
+[ext_resource path="res://Player/Land.wav" type="AudioStream" id=5]
+[ext_resource path="res://Player/LegBreak.wav" type="AudioStream" id=6]
+[ext_resource path="res://Player/Shot.wav" type="AudioStream" id=7]
+[ext_resource path="res://Player/QuickCharge.wav" type="AudioStream" id=8]
+[ext_resource path="res://Player/Hurt.wav" type="AudioStream" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -72,6 +73,23 @@ tracks/0/keys = {
 "values": [ 3 ]
 }
 
+[sub_resource type="Animation" id=10]
+
+resource_name = "shoot"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 7 ]
+}
+
 [sub_resource type="Animation" id=7]
 
 length = 0.1
@@ -121,35 +139,44 @@ __meta__ = {
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
-hframes = 7
+hframes = 8
+
+[node name="SpriteGun" type="Position2D" parent="."]
+editor/display_folded = true
+visible = false
+position = Vector2( 0, 5 )
+
+[node name="SpriteGun" type="Sprite" parent="SpriteGun"]
+position = Vector2( 5, -1 )
+texture = ExtResource( 3 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 2 )
 shape = SubResource( 1 )
 
 [node name="Jump" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
-bus = "SFX"
-
-[node name="Land" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 bus = "SFX"
 
-[node name="LegBreak" type="AudioStreamPlayer" parent="."]
+[node name="Land" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 bus = "SFX"
 
-[node name="Shot" type="AudioStreamPlayer" parent="."]
+[node name="LegBreak" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 bus = "SFX"
 
-[node name="Charge" type="AudioStreamPlayer" parent="."]
+[node name="Shot" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
+bus = "SFX"
+
+[node name="Charge" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
 volume_db = 5.0
 bus = "SFX"
 
 [node name="Hurt" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
+stream = ExtResource( 9 )
 pitch_scale = 2.0
 bus = "SFX"
 
@@ -178,6 +205,7 @@ shape = SubResource( 3 )
 anims/fall = SubResource( 4 )
 anims/jump = SubResource( 5 )
 anims/land = SubResource( 6 )
+anims/shoot = SubResource( 10 )
 anims/stand = SubResource( 7 )
 anims/walk = SubResource( 8 )
 

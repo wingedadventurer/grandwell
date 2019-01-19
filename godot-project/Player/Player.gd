@@ -61,20 +61,13 @@ var laser_beam_rotation = Vector2(1, 0)
 func _ready():
 	default_position = position
 	gravity_scale = GRAVITY_SCALE_DEFAULT
-#	var camera = scene_camera.instance()
-#	get_parent().add_child(camera)
 
 func _process(delta):
 	if Input.is_action_just_pressed("reset"):
 		die()
-#		position = default_position
-#		velocity = Vector2()
-#		state_next = State.NORMAL
-#		health = MAX_HEALTH
-#		# Tell the level that we want to reset
-#		Get.level().reset()
 	
 	choose_laserbeam_direction()
+	$SpriteGun.rotation = laser_beam_rotation.angle()
 	update()
 
 func _physics_process(delta):
@@ -89,7 +82,6 @@ func _physics_process(delta):
 
 func _draw():
 	if state == State.SHOOTING:
-		draw_line(Vector2(), laser_beam_rotation * 20.0, Color(1, 0.2, 0.2, 0.5), 3.0)
 		draw_circle(Vector2(), shoot_time * 30.0 + 10.0, Color(1.0, 0.2, 0.2, 0.5))
 
 func state_normal(delta):
@@ -210,6 +202,8 @@ func state_climbing(delta):
 		state_next = State.SHOOTING
 
 func state_shooting(delta):
+	$Movement.play("shoot")
+	
 	# shoot countdown
 	if shoot_time >= 0: shoot_time -= delta
 	if shoot_time < 0 or Input.is_action_just_released("player_shoot"):
@@ -259,6 +253,7 @@ func switch_states():
 				gravity_scale = SHOOT_SLOWMO_AMOUNT
 				shoot_time = SHOOT_TIME
 				$Charge.play()
+				$SpriteGun.visible = true
 		state = state_next
 
 func can_shoot():
@@ -267,7 +262,7 @@ func can_shoot():
 func shoot():
 	var charge_factor = 1 - shoot_time / SHOOT_TIME
 	var laserbeam = scene_laserbeam.instance()
-	laserbeam.global_position = global_position
+	laserbeam.global_position = global_position + Vector2(0, 6)
 	
 	laserbeam.rotation = laser_beam_rotation.angle()
 	var throw = Vector2(1, 0).rotated(laser_beam_rotation.angle() + deg2rad(180)) * (200.0  + 300.0 * charge_factor)
@@ -279,6 +274,8 @@ func shoot():
 	$Charge.stop()
 	$Shot.play()
 	Get.camera().shake(0.5 + charge_factor * 0.2, 5.0 + charge_factor * 10.0)
+	
+	$SpriteGun.visible = false
 
 func jump(var strength):
 	velocity.y = -strength

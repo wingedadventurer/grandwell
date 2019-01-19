@@ -24,4 +24,5 @@ disabled = true
 
 [node name="Death" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+bus = "SFX"
 
