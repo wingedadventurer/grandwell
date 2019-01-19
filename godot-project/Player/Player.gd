@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
-const scene_camera = preload("res://Camera/Camera.tscn")
 var scene_laserbeam = preload("res://Player/LaserBeam/LaserBeam.tscn")
+const scene_playercorpse = preload("res://Player/PlayerCorpse.tscn")
 
 enum State {
 	NORMAL,
@@ -43,6 +43,7 @@ var SHOOT_SLOWMO_AMOUNT = 0.2
 const MAX_HEALTH = 3
 
 onready var health = MAX_HEALTH
+var invulnerable = false
 
 # animation
 var lock_animation = false
@@ -60,17 +61,18 @@ var laser_beam_rotation = Vector2(1, 0)
 func _ready():
 	default_position = position
 	gravity_scale = GRAVITY_SCALE_DEFAULT
-	var camera = scene_camera.instance()
-	get_parent().add_child(camera)
+#	var camera = scene_camera.instance()
+#	get_parent().add_child(camera)
 
 func _process(delta):
 	if Input.is_action_just_pressed("reset"):
-		position = default_position
-		velocity = Vector2()
-		state_next = State.NORMAL
-		health = MAX_HEALTH
-		# Tell the level that we want to reset
-		Get.level().reset()
+		die()
+#		position = default_position
+#		velocity = Vector2()
+#		state_next = State.NORMAL
+#		health = MAX_HEALTH
+#		# Tell the level that we want to reset
+#		Get.level().reset()
 	
 	choose_laserbeam_direction()
 	update()
@@ -304,6 +306,27 @@ func land():
 	print(fall_distance)
 	if fall_distance > MAX_SAFE_FALL_DISTANCE:
 		$LegBreak.play()
+		hurt()
+
+func hurt():
+	health -= 1
+	if health > 0:
+		invulnerable = true
+		$Timer_Invulnerability.start()
+	else:
+		die()
+
+func die():
+	var corpse = scene_playercorpse.instance()
+	corpse.global_position = global_position
+	corpse.apply_impulse(Vector2(0, 0), Vector2(0, -100))
+	get_parent().add_child(corpse)
+	Get.camera().set_target_point(corpse)
+	Get.level().player_dead()
+	queue_free()
 
 func _on_Movement_animation_finished(anim_name):
 	lock_animation = false
+
+func _on_Timer_Invulnerability_timeout():
+	invulnerable = false

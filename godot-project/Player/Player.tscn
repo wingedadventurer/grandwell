@@ -173,4 +173,7 @@ anims/land = SubResource( 6 )
 anims/stand = SubResource( 7 )
 anims/walk = SubResource( 8 )
 
+[node name="Timer_Invulnerability" type="Timer" parent="."]
+
 [connection signal="animation_finished" from="Movement" to="." method="_on_Movement_animation_finished"]
+[connection signal="timeout" from="Timer_Invulnerability" to="." method="_on_Timer_Invulnerability_timeout"]

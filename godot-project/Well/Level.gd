@@ -3,6 +3,7 @@ extends Node2D
 export (int) var number # Which level are we currently playing?
 
 var scene_player = preload("res://Player/Player.tscn")
+const scene_camera = preload("res://Camera/Camera.tscn")
 
 var scene_ladder = preload("res://Well/Ladder/Ladder.tscn")
 var scene_platform = preload("res://Well/Platform/Platform.tscn")
@@ -21,6 +22,7 @@ enum State {
 
 func _ready():
 	print("Well \"" + str(name) + "\" Started!")
+	spawn_camera()
 	spawn_player()
 	add_collisions()
 	$PlayerSpawn.visible = false
@@ -31,6 +33,7 @@ func _ready():
 	Get.camera().indicator_target = get_bottom_position()
 
 func reset():
+	spawn_player()
 	state = State.DESCENT
 	# Reset all 'resettables'
 	var resettables = get_tree().get_nodes_in_group("resettables")
@@ -55,10 +58,15 @@ func deactivate_diamonds():
 		if diamond.is_in_group("diamond"):
 			diamond.deactivate()
 
+func spawn_camera():
+	var camera = scene_camera.instance()
+	add_child(camera)
+
 func spawn_player():
 	var player = scene_player.instance()
 	player.position = $PlayerSpawn.position
 	add_child(player)
+	Get.camera().set_target_player()
 
 func get_top_position():
 	return $Top.position
@@ -101,6 +109,9 @@ func player_escaped():
 	MusicPlayer.stop()
 	Get.camera().indicator_target = null
 
+func player_dead():
+	$Timer_Respawn.start()
+
 func _process(delta):
 	if Input.is_action_pressed("pause"):
 		var pause = scene_pause.instance()
@@ -113,3 +124,7 @@ func _on_DescentCheck_body_entered(body):
 func _on_AscentCheck_body_entered(body):
 	if body.is_in_group("player") and state == State.ASCENT:
 		player_escaped()
+
+func _on_Timer_Respawn_timeout():
+	$Timer_Respawn.stop()
+	reset()
