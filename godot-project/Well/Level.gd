@@ -9,6 +9,8 @@ var scene_platform = preload("res://Well/Platform/Platform.tscn")
 
 const scene_pause = preload("res://Menu/PauseScreen.tscn")
 
+onready var well_center = $WellCenter
+
 var state
 
 enum State {
@@ -81,6 +83,8 @@ func begin_discovery():
 	MusicPlayer.play_discovery()
 	Get.camera().remove_pan()
 	Get.camera().indicator_target = null
+	Get.camera().set_zoom_amount(0.5)
+	Get.camera().set_target_point(well_center)
 
 func begin_escape():
 	print("Ascent phase started")
@@ -88,6 +92,8 @@ func begin_escape():
 	MusicPlayer.play_ascent()
 	Get.camera().pan_up()
 	Get.camera().indicator_target = get_top_position()
+	Get.camera().set_zoom_amount(0.3)
+	Get.camera().set_target_player()
 
 func player_escaped():
 	print("Level complete")

@@ -35,6 +35,8 @@ texture = ExtResource( 2 )
 
 [node name="Top" type="Position2D" parent="."]
 
+[node name="WellCenter" type="Position2D" parent="."]
+
 [node name="DescentCheck" type="Area2D" parent="."]
 editor/display_folded = true
 z_index = 60
