@@ -29,9 +29,20 @@ var gravity_scale
 var GRAB_DELAY = 0.1
 var CLIMB_SPEED = 100.0
 
+# jumping
+var jump_start_y = 0 	# For the sake of determining if we take fall damage,
+						# we note our y position when we jumped,
+						# so we can compare it to the y position when we land
+
+const MAX_SAFE_FALL_DISTANCE = 140
+
 # shooting
 var SHOOT_TIME = 0.5
 var SHOOT_SLOWMO_AMOUNT = 0.2
+
+const MAX_HEALTH = 3
+
+onready var health = MAX_HEALTH
 
 # animation
 var lock_animation = false
@@ -57,6 +68,7 @@ func _process(delta):
 		position = default_position
 		velocity = Vector2()
 		state_next = State.NORMAL
+		health = MAX_HEALTH
 		# Tell the level that we want to reset
 		Get.level().reset()
 	
@@ -108,6 +120,10 @@ func state_normal(delta):
 		if velocity.y <= 0: $Movement.play("jump")
 		else: $Movement.play("fall")
 	
+	# jump start y
+	if is_on_floor() or velocity.y < 0:
+		jump_start_y = position.y
+	
 	# calculating coyote time
 	if is_on_floor(): jump_time = COYOTE_TIME
 	else:
@@ -140,8 +156,7 @@ func state_normal(delta):
 		if on_floor_last == false:
 			$Land.play()
 			if not lock_animation:
-				$Movement.play("land")
-				lock_animation = true
+				land()
 		on_floor_last = is_on_floor()
 	
 	# checking ladders
@@ -163,6 +178,7 @@ func state_normal(delta):
 		state_next = State.SHOOTING
 
 func state_climbing(delta):
+	jump_start_y = position.y
 	# calculating velocity (climb if there is more ladder)
 	velocity.y = 0
 	if Input.is_action_pressed("player_move_up"):
@@ -281,6 +297,13 @@ func jump(var strength):
 	$Jump.play()
 	jump_time = 0.0
 
+func land():
+	$Movement.play("land")
+	lock_animation = true
+	var fall_distance = position.y - jump_start_y
+	print(fall_distance)
+	if fall_distance > MAX_SAFE_FALL_DISTANCE:
+		$LegBreak.play()
 
 func _on_Movement_animation_finished(anim_name):
 	lock_animation = false
