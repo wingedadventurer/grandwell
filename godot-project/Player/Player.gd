@@ -324,6 +324,7 @@ func die():
 	Get.camera().set_target_point(corpse)
 	Get.level().player_dead()
 	queue_free()
+#	call_deferred("queue_free")
 
 func _on_Movement_animation_finished(anim_name):
 	lock_animation = false

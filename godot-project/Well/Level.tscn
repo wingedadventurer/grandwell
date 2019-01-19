@@ -47,6 +47,7 @@ z_as_relative = false
 shape = SubResource( 1 )
 
 [node name="AscentCheck" type="Area2D" parent="."]
+editor/display_folded = true
 z_index = 60
 z_as_relative = false
 

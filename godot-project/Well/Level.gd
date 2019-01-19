@@ -24,25 +24,30 @@ enum State {
 func _ready():
 	print("Well \"" + str(name) + "\" Started!")
 	spawn_camera()
-	spawn_player()
 	add_collisions()
 	$PlayerSpawn.visible = false
 	
-	state = State.DESCENT
-	MusicPlayer.play_descent()
-	Get.camera().pan_down()
-	Get.camera().indicator_target = get_bottom_position()
+	reset()
 
 func reset():
 	spawn_player()
 	state = State.DESCENT
+	MusicPlayer.play_descent()
+	
 	# Reset all 'resettables'
 	var resettables = get_tree().get_nodes_in_group("resettables")
 	for current_resettable in resettables:
 		current_resettable.reset()
 	
+	# Remove all 'removables'
+	var removables = get_tree().get_nodes_in_group("removables")
+	for removable in removables:
+		removable.queue_free()
+	
 	Get.camera().pan_down()
 	Get.camera().indicator_target = get_bottom_position()
+	
+	$WaterLine.visible = false
 
 func check_diamonds():
 	if state != State.DISCOVERY: return
@@ -104,6 +109,7 @@ func begin_escape():
 	Get.camera().set_zoom_amount(0.3)
 	Get.camera().set_target_player()
 	$WaterLine.rising = true
+	$WaterLine.show()
 
 func player_escaped():
 	print("Level complete")

@@ -1,15 +1,15 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Well/Level.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Well/Diamond/Diamond.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Tilesets and textures/Dirt.tres" type="TileSet" id=3]
-[ext_resource path="res://Tilesets and textures/Backgrounds.tres" type="TileSet" id=4]
-[ext_resource path="res://Tilesets and textures/Walls.tres" type="TileSet" id=5]
-[ext_resource path="res://Tilesets and textures/Platforms.tres" type="TileSet" id=6]
-[ext_resource path="res://Tilesets and textures/Ladders.tres" type="TileSet" id=7]
-[ext_resource path="res://Tilesets and textures/Crystal.tres" type="TileSet" id=8]
+[ext_resource path="res://Tilesets and textures/Dirt.tres" type="TileSet" id=2]
+[ext_resource path="res://Tilesets and textures/Backgrounds.tres" type="TileSet" id=3]
+[ext_resource path="res://Tilesets and textures/Walls.tres" type="TileSet" id=4]
+[ext_resource path="res://Tilesets and textures/Platforms.tres" type="TileSet" id=5]
+[ext_resource path="res://Tilesets and textures/Ladders.tres" type="TileSet" id=6]
+[ext_resource path="res://Tilesets and textures/Crystal.tres" type="TileSet" id=7]
+[ext_resource path="res://Well/Diamond/Diamond.tscn" type="PackedScene" id=8]
 
-[node name="WellTest" index="0" instance=ExtResource( 1 )]
+[node name="WellTest" instance=ExtResource( 1 )]
 pause_mode = 1
 number = 2
 
@@ -26,7 +26,7 @@ position = Vector2( 0, -40 )
 z_index = 50
 z_as_relative = false
 
-[node name="DescentCheck" parent="." index="3"]
+[node name="DescentCheck" parent="." index="4"]
 editor/display_folded = false
 position = Vector2( 0, 504 )
 scale = Vector2( 2, 1 )
@@ -34,36 +34,13 @@ scale = Vector2( 2, 1 )
 [node name="Collision" parent="DescentCheck" index="0"]
 position = Vector2( 0, 24 )
 
-[node name="AscentCheck" parent="." index="4"]
+[node name="AscentCheck" parent="." index="5"]
 position = Vector2( 0, -48 )
 scale = Vector2( 2, 1 )
 
-[node name="Diamond" parent="Diamonds" index="0" instance=ExtResource( 2 )]
-position = Vector2( 48, 684 )
-
-[node name="Diamond7" parent="Diamonds" index="1" instance=ExtResource( 2 )]
-position = Vector2( 72, 564 )
-active = true
-
-[node name="Diamond2" parent="Diamonds" index="2" instance=ExtResource( 2 )]
-position = Vector2( 72, 708 )
-active = true
-
-[node name="Diamond3" parent="Diamonds" index="3" instance=ExtResource( 2 )]
-position = Vector2( 72, 684 )
-
-[node name="Diamond4" parent="Diamonds" index="4" instance=ExtResource( 2 )]
-position = Vector2( 24, 660 )
-
-[node name="Diamond5" parent="Diamonds" index="5" instance=ExtResource( 2 )]
-position = Vector2( -24, 696 )
-
-[node name="Diamond6" parent="Diamonds" index="6" instance=ExtResource( 2 )]
-position = Vector2( -132, 684 )
-
 [node name="Dirt" type="TileMap" parent="." index="6"]
 position = Vector2( 0, -192 )
-tile_set = ExtResource( 3 )
+tile_set = ExtResource( 2 )
 cell_size = Vector2( 12, 12 )
 collision_mask = 0
 format = 1
@@ -74,7 +51,7 @@ __meta__ = {
 
 [node name="Backgrounds" type="TileMap" parent="." index="7"]
 position = Vector2( 0, -192 )
-tile_set = ExtResource( 4 )
+tile_set = ExtResource( 3 )
 cell_size = Vector2( 12, 12 )
 collision_mask = 0
 format = 1
@@ -85,7 +62,7 @@ __meta__ = {
 
 [node name="Walls" type="TileMap" parent="." index="8"]
 position = Vector2( 0, -192 )
-tile_set = ExtResource( 5 )
+tile_set = ExtResource( 4 )
 cell_size = Vector2( 12, 12 )
 collision_mask = 0
 format = 1
@@ -95,7 +72,7 @@ __meta__ = {
 }
 
 [node name="Platforms" type="TileMap" parent="." index="9"]
-tile_set = ExtResource( 6 )
+tile_set = ExtResource( 5 )
 cell_size = Vector2( 12, 12 )
 collision_mask = 0
 format = 1
@@ -106,7 +83,7 @@ __meta__ = {
 
 [node name="Ladders" type="TileMap" parent="." index="10"]
 position = Vector2( 6, 6 )
-tile_set = ExtResource( 7 )
+tile_set = ExtResource( 6 )
 cell_size = Vector2( 12, 12 )
 collision_mask = 0
 format = 1
@@ -116,7 +93,7 @@ __meta__ = {
 }
 
 [node name="Crystals" type="TileMap" parent="." index="11"]
-tile_set = ExtResource( 8 )
+tile_set = ExtResource( 7 )
 cell_size = Vector2( 12, 12 )
 format = 1
 tile_data = PoolIntArray( 2949110, 1610612741, 0, 2949111, 1610612736, 0, 2949112, 1610612740, 0, 2949113, 1610612741, 0, 2949114, 1610612736, 0, 2949115, 1610612740, 0, 2883586, 1610612741, 0, 2883587, 1610612736, 0, 2883588, 1610612738, 0, 2883589, 1073741829, 0, 3014647, 1610612741, 0, 3014648, 1610612736, 0, 3014649, 1610612740, 0, 3014650, 1610612741, 0, 3014651, 1610612736, 0, 3014652, 1610612740, 0, 2949122, 1073741828, 0, 2949123, 1610612739, 0, 2949124, 1610612736, 0, 2949125, 1610612740, 0, 3080184, 1610612741, 0, 3080185, 1610612736, 0, 3080186, 1610612740, 0, 3080187, 1610612741, 0, 3080188, 1610612736, 0, 3080189, 1610612740, 0, 3014658, 1073741825, 0, 3014659, 1073741829, 0, 3014660, 1610612741, 0, 3014661, 1610612736, 0, 3014662, 1610612740, 0, 3145715, 1610612736, 0, 3145716, 1610612740, 0, 3145721, 1610612741, 0, 3145722, 1610612737, 0, 3145724, 1610612741, 0, 3145725, 1610612736, 0, 3145726, 1610612740, 0, 3080197, 1610612741, 0, 3080198, 1610612736, 0, 3080199, 1610612740, 0, 3211251, 1610612741, 0, 3211252, 1610612736, 0, 3211253, 1610612740, 0, 3211261, 1610612741, 0, 3211262, 1610612737, 0, 3145734, 1610612741, 0, 3145735, 1610612736, 0, 3145736, 1610612740, 0, 3276788, 1610612741, 0, 3276789, 1610612736, 0, 3276790, 1610612740, 0, 3211271, 1610612741, 0, 3211272, 1610612737, 0, 3342325, 1610612741, 0, 3342326, 1610612736, 0, 3342327, 1610612740, 0, 3407862, 1610612741, 0, 3407863, 1610612736, 0, 3407864, 1610612740, 0, 3473399, 1610612741, 0, 3473400, 1610612737, 0, 3538940, 536870917, 0, 3538941, 536870913, 0, 3604475, 536870917, 0, 3604476, 536870912, 0, 3604477, 536870916, 0, 3538945, 1, 0, 3538946, 5, 0, 3670005, 536870917, 0, 3670006, 536870913, 0, 3670010, 536870917, 0, 3670011, 536870912, 0, 3670012, 536870916, 0, 3604481, 4, 0, 3604482, 0, 0, 3604483, 5, 0, 3604486, 536870917, 0, 3604487, 536870913, 0, 3735540, 536870917, 0, 3735541, 536870912, 0, 3735542, 536870916, 0, 3735545, 536870917, 0, 3735546, 536870912, 0, 3735547, 536870916, 0, 3670018, 4, 0, 3670019, 0, 0, 3670020, 5, 0, 3670021, 536870917, 0, 3670022, 536870912, 0, 3670023, 536870916, 0, 3801075, 536870917, 0, 3801076, 536870912, 0, 3801077, 536870916, 0, 3801080, 536870917, 0, 3801081, 536870912, 0, 3801082, 536870916, 0, 3801085, 1, 0, 3801086, 5, 0, 3735555, 4, 0, 3735556, 0, 0, 3735557, 3, 0, 3735558, 536870916, 0, 3866611, 536870912, 0, 3866612, 536870916, 0, 3866615, 536870917, 0, 3866616, 536870912, 0, 3866617, 536870916, 0, 3866621, 4, 0, 3866622, 0, 0, 3866623, 5, 0, 3801091, 536870917, 0, 3801092, 2, 0, 3801093, 0, 0, 3801094, 5, 0, 3932150, 536870917, 0, 3932151, 536870912, 0, 3932152, 536870916, 0, 3932158, 4, 0, 3932159, 0, 0, 3866624, 5, 0, 3866626, 536870917, 0, 3866627, 536870912, 0, 3866628, 536870916, 0, 3866629, 4, 0, 3866630, 0, 0, 3866631, 5, 0 )
@@ -125,4 +102,30 @@ tile_data = PoolIntArray( 2949110, 1610612741, 0, 2949111, 1610612736, 0, 294911
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Diamond" parent="Diamonds" index="0" instance=ExtResource( 8 )]
+position = Vector2( 48, 684 )
+
+[node name="Diamond7" parent="Diamonds" index="1" instance=ExtResource( 8 )]
+position = Vector2( 72, 564 )
+active = true
+
+[node name="Diamond2" parent="Diamonds" index="2" instance=ExtResource( 8 )]
+position = Vector2( 72, 708 )
+active = true
+
+[node name="Diamond3" parent="Diamonds" index="3" instance=ExtResource( 8 )]
+position = Vector2( 72, 684 )
+
+[node name="Diamond4" parent="Diamonds" index="4" instance=ExtResource( 8 )]
+position = Vector2( 24, 660 )
+
+[node name="Diamond5" parent="Diamonds" index="5" instance=ExtResource( 8 )]
+position = Vector2( -24, 696 )
+
+[node name="Diamond6" parent="Diamonds" index="6" instance=ExtResource( 8 )]
+position = Vector2( -132, 684 )
+
+[node name="WaterLine" parent="." index="15"]
+position = Vector2( 0, 792 )
 
