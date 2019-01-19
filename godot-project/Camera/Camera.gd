@@ -105,6 +105,10 @@ func apply_depth_effects():
 	# applying reverb
 	var reverb_amount = clamp(depth_scale, MINIMUM_REVERB_AMOUNT, MAXIMUM_REVERB_AMOUNT)
 	AudioServer.get_bus_effect(AudioServer.get_bus_index("SFX"), 0).wet = (reverb_amount) * REVERB_FACTOR
+	
+	# fade out sfx with depth
+	var sfx_volume = clamp(get_remaining_depth(), 0, 15)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), sfx_volume-15)
 
 func get_remaining_depth():
 	if indicator_target == null: return 0
