@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 Get="*res://Autoload/Get.tscn"
 LevelLoader="*res://Autoload/LevelLoader.tscn"
 MusicPlayer="*res://Autoload/MusicPlayer.tscn"
+Clouds="*res://Autoload/Clouds.tscn"
 
 [debug]
 

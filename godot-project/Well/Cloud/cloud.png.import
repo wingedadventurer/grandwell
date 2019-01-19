@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/laserbeam_middle.png-8b0fc981847b8595eed34888fab9fab0.stex"
+path="res://.import/cloud.png-2790c95d048ec088ad58e4a11feb2757.stex"
 
 [deps]
 
-source_file="res://Player/LaserBeam/laserbeam_middle.png"
-dest_files=[ "res://.import/laserbeam_middle.png-8b0fc981847b8595eed34888fab9fab0.stex" ]
+source_file="res://Well/Cloud/cloud.png"
+dest_files=[ "res://.import/cloud.png-2790c95d048ec088ad58e4a11feb2757.stex" ]
 
 [params]
 

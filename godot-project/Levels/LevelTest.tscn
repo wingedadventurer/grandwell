@@ -12,7 +12,6 @@
 
 [node name="WellTest" instance=ExtResource( 1 )]
 pause_mode = 1
-number = 1
 
 [node name="PlayerSpawn" parent="." index="0"]
 position = Vector2( -48, -68 )
