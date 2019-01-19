@@ -2,6 +2,7 @@ extends Area2D
 tool
 
 export var active = false setget set_active
+onready var init_active = active
 
 func set_active(value):
 	if not has_node("Sprite"): return
@@ -24,3 +25,8 @@ func deactivate():
 	$Collision.disabled = true
 	$Tween.interpolate_property(self, "modulate:a", modulate.a, 0.2, 1.0, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	$Tween.start()
+
+func reset():
+	set_active(init_active)
+	$Collision.disabled = false
+	modulate.a = 1.0

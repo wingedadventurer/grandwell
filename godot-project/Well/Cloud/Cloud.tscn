@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Well/Cloud/Cloud.gd" type="Script" id=1]
+[ext_resource path="res://Well/Cloud/cloud.png" type="Texture" id=2]
+
+[node name="Cloud" type="Node2D"]
+z_index = 1000
+script = ExtResource( 1 )
+
+[node name="Sprite1" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 16 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 16, 48, 16 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 32, 32, 16 )
+
+[node name="Sprite4" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 32, 32, 16, 16 )
+
+[node name="Sprite5" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 48, 32, 16, 16 )
+

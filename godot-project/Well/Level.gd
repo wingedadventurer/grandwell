@@ -7,9 +7,11 @@ const scene_camera = preload("res://Camera/Camera.tscn")
 
 var scene_ladder = preload("res://Well/Ladder/Ladder.tscn")
 var scene_platform = preload("res://Well/Platform/Platform.tscn")
+var scene_spikes = load("res://Well/Spikes/Spikes.tscn")
 
 const scene_pause = preload("res://Menu/PauseScreen.tscn")
 const scene_levelcomplete = preload("res://Menu/LevelComplete.tscn")
+
 
 onready var well_center = $WellCenter
 
@@ -24,25 +26,30 @@ enum State {
 func _ready():
 	print("Well \"" + str(name) + "\" Started!")
 	spawn_camera()
-	spawn_player()
 	add_collisions()
 	$PlayerSpawn.visible = false
 	
-	state = State.DESCENT
-	MusicPlayer.play_descent()
-	Get.camera().pan_down()
-	Get.camera().indicator_target = get_bottom_position()
+	reset()
 
 func reset():
 	spawn_player()
 	state = State.DESCENT
+	MusicPlayer.play_descent()
+	
 	# Reset all 'resettables'
 	var resettables = get_tree().get_nodes_in_group("resettables")
 	for current_resettable in resettables:
 		current_resettable.reset()
 	
+	# Remove all 'removables'
+	var removables = get_tree().get_nodes_in_group("removables")
+	for removable in removables:
+		removable.queue_free()
+	
 	Get.camera().pan_down()
 	Get.camera().indicator_target = get_bottom_position()
+	
+	$WaterLine.visible = false
 
 func check_diamonds():
 	if state != State.DISCOVERY: return
@@ -85,6 +92,11 @@ func add_collisions():
 		var inst = scene_platform.instance()
 		inst.position = $Platforms.map_to_world(tile)
 		$Collisions.add_child(inst)
+	
+	for tile in $Spikes.get_used_cells():
+		var inst = scene_spikes.instance()
+		inst.position = $Spikes.map_to_world(tile) + Vector2(6, 6)
+		$Collisions.add_child(inst)
 
 func begin_discovery():
 	print("Discovery phase started")
@@ -104,6 +116,7 @@ func begin_escape():
 	Get.camera().set_zoom_amount(0.3)
 	Get.camera().set_target_player()
 	$WaterLine.rising = true
+	$WaterLine.show()
 
 func player_escaped():
 	print("Level complete")

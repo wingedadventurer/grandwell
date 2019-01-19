@@ -25,6 +25,7 @@ Get="*res://Autoload/Get.tscn"
 LevelLoader="*res://Autoload/LevelLoader.tscn"
 MusicPlayer="*res://Autoload/MusicPlayer.tscn"
 Options="*res://Autoload/Options.gd"
+Clouds="*res://Autoload/Clouds.tscn"
 
 [debug]
 

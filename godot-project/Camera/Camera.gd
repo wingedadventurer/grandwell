@@ -63,8 +63,8 @@ func _process(delta):
 		position.x = lerp(position.x, player.position.x * PLAYER_HORIZONTAL_FOLLOW_PARALLAX_FACTOR, PLAYER_HORIZONTAL_FOLLOW_LERP_WEIGHT)
 		position.y = lerp(position.y, player.position.y, PLAYER_VERTICAL_FOLLOW_LERP_WEIGHT)
 	elif current_target == Targets.POINT:
-		position.x = lerp(position.x, target_point.position.x, delta)
-		position.y = lerp(position.y, target_point.position.y, delta)
+		position.x = lerp(position.x, target_point.position.x, 5 * delta)
+		position.y = lerp(position.y, target_point.position.y, 5 * delta)
 	
 	# shake camera
 	if shake_time > 0:

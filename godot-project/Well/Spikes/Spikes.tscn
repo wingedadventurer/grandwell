@@ -2,10 +2,12 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 
-extents = Vector2( 4, 4 )
+extents = Vector2( 6, 6 )
 
-[node name="Spikes" type="Area2D"]
+[node name="Spikes" type="Area2D" groups=[
+"spikes",
+]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 

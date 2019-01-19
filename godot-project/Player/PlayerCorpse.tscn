@@ -1,13 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Player/Corpse.png" type="Texture" id=1]
-
+[ext_resource path="res://Player/Death.wav" type="AudioStream" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 
 radius = 6.84777
 
-[node name="PlayerCorpse" type="RigidBody2D"]
+[node name="PlayerCorpse" type="RigidBody2D" groups=[
+"removables",
+]]
 z_index = 50
 gravity_scale = 5.0
 
@@ -19,4 +21,7 @@ region_rect = Rect2( 0, 4, 16, 20 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 disabled = true
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
 

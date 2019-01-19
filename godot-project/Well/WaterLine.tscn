@@ -58,6 +58,8 @@ bus = "SFX"
 
 [node name="Timer_Damage" type="Timer" parent="."]
 
+[node name="Tween" type="Tween" parent="."]
+
 [connection signal="body_entered" from="Area2D" to="." method="_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_body_exited"]
 [connection signal="timeout" from="Timer_Damage" to="." method="_on_Timer_Damage_timeout"]

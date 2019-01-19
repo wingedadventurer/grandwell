@@ -84,6 +84,8 @@ func _physics_process(delta):
 		State.CLIMBING: state_climbing(delta)
 		State.SHOOTING: state_shooting(delta)
 	switch_states()
+	
+	check_spikes()
 
 func _draw():
 	if state == State.SHOOTING:
@@ -225,24 +227,6 @@ func state_shooting(delta):
 		on_floor_last = is_on_floor()
 
 func choose_laserbeam_direction():
-	if Input.is_action_just_pressed("player_move_right"):
-		if Input.is_action_pressed("player_move_up"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(315))
-		elif Input.is_action_pressed("player_move_down"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(45))
-		else: laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(0))
-	if Input.is_action_just_pressed("player_move_down"):
-		if Input.is_action_pressed("player_move_left"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(135))
-		elif Input.is_action_pressed("player_move_right"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(45))
-		else: laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(90))
-	if Input.is_action_just_pressed("player_move_left"):
-		if Input.is_action_pressed("player_move_up"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(225))
-		elif Input.is_action_pressed("player_move_down"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(135))
-		else: laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(180))
-	if Input.is_action_just_pressed("player_move_up"):
-		if Input.is_action_pressed("player_move_left"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(225))
-		elif Input.is_action_pressed("player_move_right"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(315))
-		else: laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(270))
-
-func choose_laserbeam_direction_tick():
 	if Input.is_action_pressed("player_move_right"):
 		if Input.is_action_pressed("player_move_up"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(315))
 		elif Input.is_action_pressed("player_move_down"): laser_beam_rotation = Vector2(1, 0).rotated(deg2rad(45))
@@ -274,7 +258,6 @@ func switch_states():
 				velocity *= SHOOT_SLOWMO_AMOUNT
 				gravity_scale = SHOOT_SLOWMO_AMOUNT
 				shoot_time = SHOOT_TIME
-				choose_laserbeam_direction_tick()
 				$Charge.play()
 		state = state_next
 
@@ -282,17 +265,20 @@ func can_shoot():
 	return true # TODO: add shoot delay
 
 func shoot():
+	var charge_factor = 1 - shoot_time / SHOOT_TIME
 	var laserbeam = scene_laserbeam.instance()
 	laserbeam.global_position = global_position
 	
 	laserbeam.rotation = laser_beam_rotation.angle()
-	var throw = Vector2(1, 0).rotated(laser_beam_rotation.angle() + deg2rad(180)) * 500.0
+	var throw = Vector2(1, 0).rotated(laser_beam_rotation.angle() + deg2rad(180)) * (200.0  + 300.0 * charge_factor)
 	velocity = throw
 	
+	laserbeam.length = 24 + (150 * charge_factor)
 	Get.level().add_child(laserbeam)
+	
 	$Charge.stop()
 	$Shot.play()
-	Get.camera().shake()
+	Get.camera().shake(0.5 + charge_factor * 0.2, 5.0 + charge_factor * 10.0)
 
 func jump(var strength):
 	velocity.y = -strength
@@ -303,30 +289,49 @@ func land():
 	$Movement.play("land")
 	lock_animation = true
 	var fall_distance = position.y - jump_start_y
-	print(fall_distance)
+#	print(fall_distance)
 	if fall_distance > MAX_SAFE_FALL_DISTANCE:
 		$LegBreak.play()
 		hurt()
 
 func hurt():
+	if invulnerable: return
+	
 	health -= 1
+	invulnerable = true
 	if health > 0:
-		invulnerable = true
+		$Hurt.play()
 		$Timer_Invulnerability.start()
 	else:
 		die()
+
+func check_spikes():
+	if invulnerable: return
+	
+	for spikes in $SpikeChecker.get_overlapping_areas():
+		if spikes.is_in_group("spikes"):
+			hurt()
+			Get.level().get_node("SpikeStab").play()
+			velocity.y = -JUMP_STRENGTH
+			jump_time = 0.0
+			return
+
+func knockback(multiplier = 1.0):
+	velocity = velocity.rotated(deg2rad(180)) * multiplier
 
 func die():
 	var corpse = scene_playercorpse.instance()
 	corpse.global_position = global_position
 	corpse.apply_impulse(Vector2(0, 0), Vector2(0, -100))
+	corpse.get_node("Death").play()
 	get_parent().add_child(corpse)
 	Get.camera().set_target_point(corpse)
 	Get.level().player_dead()
-	queue_free()
+	call_deferred("queue_free")
 
 func _on_Movement_animation_finished(anim_name):
 	lock_animation = false
 
 func _on_Timer_Invulnerability_timeout():
 	invulnerable = false
+

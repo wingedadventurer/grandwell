@@ -10,6 +10,7 @@ extents = Vector2( 6, 6 )
 
 [node name="Diamond" type="Area2D" groups=[
 "diamond",
+"resettables",
 ]]
 z_index = 120
 z_as_relative = false

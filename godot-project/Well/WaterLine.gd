@@ -27,3 +27,8 @@ func _body_exited(body):
 # Recurring damage if the player remains in water
 func _on_Timer_Damage_timeout():
 	Get.player().hurt()
+
+func show():
+	visible = true
+	$Tween.interpolate_property(self, "modulate:a", 0.0, 1.0, 2.0, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	$Tween.start()
