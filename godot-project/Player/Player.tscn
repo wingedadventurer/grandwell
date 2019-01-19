@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Player/LegBreak.wav" type="AudioStream" id=5]
 [ext_resource path="res://Player/Shot.wav" type="AudioStream" id=6]
 [ext_resource path="res://Player/QuickCharge.wav" type="AudioStream" id=7]
+[ext_resource path="res://Player/Hurt.wav" type="AudioStream" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -104,6 +105,10 @@ tracks/0/keys = {
 "values": [ 4, 5, 6 ]
 }
 
+[sub_resource type="RectangleShape2D" id=9]
+
+extents = Vector2( 4, 8 )
+
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
@@ -117,10 +122,9 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 hframes = 7
-frame = 3
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-visible = false
+position = Vector2( 0, 2 )
 shape = SubResource( 1 )
 
 [node name="Jump" type="AudioStreamPlayer" parent="."]
@@ -144,10 +148,14 @@ stream = ExtResource( 7 )
 volume_db = 5.0
 bus = "SFX"
 
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+pitch_scale = 2.0
+bus = "SFX"
+
 [node name="LadderCheckUp" type="Area2D" parent="."]
 editor/display_folded = true
 visible = false
-position = Vector2( 0, -2 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -158,7 +166,7 @@ shape = SubResource( 2 )
 [node name="LadderCheckDown" type="Area2D" parent="."]
 editor/display_folded = true
 visible = false
-position = Vector2( 0, 2 )
+position = Vector2( 0, 4 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -174,6 +182,13 @@ anims/stand = SubResource( 7 )
 anims/walk = SubResource( 8 )
 
 [node name="Timer_Invulnerability" type="Timer" parent="."]
+
+[node name="SpikeChecker" type="Area2D" parent="."]
+visible = false
+position = Vector2( 0, 2 )
+
+[node name="Collision" type="CollisionShape2D" parent="SpikeChecker"]
+shape = SubResource( 9 )
 
 [connection signal="animation_finished" from="Movement" to="." method="_on_Movement_animation_finished"]
 [connection signal="timeout" from="Timer_Invulnerability" to="." method="_on_Timer_Invulnerability_timeout"]

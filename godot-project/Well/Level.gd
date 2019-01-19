@@ -7,9 +7,11 @@ const scene_camera = preload("res://Camera/Camera.tscn")
 
 var scene_ladder = preload("res://Well/Ladder/Ladder.tscn")
 var scene_platform = preload("res://Well/Platform/Platform.tscn")
+var scene_spikes = load("res://Well/Spikes/Spikes.tscn")
 
 const scene_pause = preload("res://Menu/PauseScreen.tscn")
 const scene_levelcomplete = preload("res://Menu/LevelComplete.tscn")
+
 
 onready var well_center = $WellCenter
 
@@ -89,6 +91,11 @@ func add_collisions():
 	for tile in $Platforms.get_used_cells():
 		var inst = scene_platform.instance()
 		inst.position = $Platforms.map_to_world(tile)
+		$Collisions.add_child(inst)
+	
+	for tile in $Spikes.get_used_cells():
+		var inst = scene_spikes.instance()
+		inst.position = $Spikes.map_to_world(tile) + Vector2(6, 6)
 		$Collisions.add_child(inst)
 
 func begin_discovery():

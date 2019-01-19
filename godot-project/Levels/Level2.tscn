@@ -26,6 +26,9 @@ position = Vector2( 0, -40 )
 z_index = 50
 z_as_relative = false
 
+[node name="WellCenter" parent="." index="3"]
+position = Vector2( 0, 624 )
+
 [node name="DescentCheck" parent="." index="4"]
 editor/display_folded = false
 position = Vector2( 0, 504 )

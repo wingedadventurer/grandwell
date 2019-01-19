@@ -84,6 +84,8 @@ func _physics_process(delta):
 		State.CLIMBING: state_climbing(delta)
 		State.SHOOTING: state_shooting(delta)
 	switch_states()
+	
+	check_spikes()
 
 func _draw():
 	if state == State.SHOOTING:
@@ -289,7 +291,9 @@ func shoot():
 	var throw = Vector2(1, 0).rotated(laser_beam_rotation.angle() + deg2rad(180)) * 500.0
 	velocity = throw
 	
+	laserbeam.length = 30.0 # TEMP
 	Get.level().add_child(laserbeam)
+	
 	$Charge.stop()
 	$Shot.play()
 	Get.camera().shake()
@@ -303,31 +307,49 @@ func land():
 	$Movement.play("land")
 	lock_animation = true
 	var fall_distance = position.y - jump_start_y
-	print(fall_distance)
+#	print(fall_distance)
 	if fall_distance > MAX_SAFE_FALL_DISTANCE:
 		$LegBreak.play()
 		hurt()
 
 func hurt():
+	if invulnerable: return
+	
 	health -= 1
+	invulnerable = true
 	if health > 0:
-		invulnerable = true
+		$Hurt.play()
 		$Timer_Invulnerability.start()
 	else:
 		die()
+
+func check_spikes():
+	if invulnerable: return
+	
+	for spikes in $SpikeChecker.get_overlapping_areas():
+		if spikes.is_in_group("spikes"):
+			hurt()
+			Get.level().get_node("SpikeStab").play()
+			velocity.y = -JUMP_STRENGTH
+			jump_time = 0.0
+			return
+
+func knockback(multiplier = 1.0):
+	velocity = velocity.rotated(deg2rad(180)) * multiplier
 
 func die():
 	var corpse = scene_playercorpse.instance()
 	corpse.global_position = global_position
 	corpse.apply_impulse(Vector2(0, 0), Vector2(0, -100))
+	corpse.get_node("Death").play()
 	get_parent().add_child(corpse)
 	Get.camera().set_target_point(corpse)
 	Get.level().player_dead()
-	queue_free()
-#	call_deferred("queue_free")
+	call_deferred("queue_free")
 
 func _on_Movement_animation_finished(anim_name):
 	lock_animation = false
 
 func _on_Timer_Invulnerability_timeout():
 	invulnerable = false
+
