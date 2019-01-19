@@ -10,9 +10,11 @@ func set_active(value):
 	active = value
 	
 	if value == true:
-		$Sprite.frame = 0
+		if Engine.editor_hint: $Sprite.frame = 4
+		else: $Animations.play("toggle_on")
 	else:
-		$Sprite.frame = 1
+		if Engine.editor_hint: $Sprite.frame = 0
+		else: $Animations.play("toggle_off")
 
 func toggle_active():
 	set_active(!active)
@@ -23,10 +25,8 @@ func toggle_active():
 
 func deactivate():
 	$Collision.disabled = true
-	$Tween.interpolate_property(self, "modulate:a", modulate.a, 0.2, 1.0, Tween.TRANS_CUBIC, Tween.EASE_OUT)
-	$Tween.start()
+	$Animations.play("deactivate")
 
 func reset():
 	set_active(init_active)
 	$Collision.disabled = false
-	modulate.a = 1.0

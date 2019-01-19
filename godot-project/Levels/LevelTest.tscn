@@ -120,12 +120,8 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Diamonds" parent="." index="14"]
-editor/display_folded = true
-
 [node name="Diamond" parent="Diamonds" index="0" instance=ExtResource( 9 )]
 position = Vector2( 48, 684 )
-active = false
 
 [node name="Diamond7" parent="Diamonds" index="1" instance=ExtResource( 9 )]
 position = Vector2( 84, 576 )
@@ -133,11 +129,9 @@ active = true
 
 [node name="Diamond2" parent="Diamonds" index="2" instance=ExtResource( 9 )]
 position = Vector2( -12, 708 )
-active = false
 
 [node name="Diamond3" parent="Diamonds" index="3" instance=ExtResource( 9 )]
 position = Vector2( -72, 684 )
-active = false
 
 [node name="Diamond4" parent="Diamonds" index="4" instance=ExtResource( 9 )]
 position = Vector2( -48, 660 )
@@ -149,7 +143,6 @@ active = true
 
 [node name="Diamond6" parent="Diamonds" index="6" instance=ExtResource( 9 )]
 position = Vector2( -132, 588 )
-active = false
 
 [node name="WaterLine" parent="." index="16"]
 position = Vector2( 0, 790 )
