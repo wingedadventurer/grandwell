@@ -1,8 +1,8 @@
 extends Node
 
-onready var title = $TitleMenu
-onready var settings = $SettingsMenu
-onready var level_select = $LevelSelectMenu
+onready var title = $CanvasLayer/TitleMenu
+onready var settings = $CanvasLayer/SettingsMenu
+onready var level_select = $CanvasLayer/LevelSelectMenu
 
 func show_title():
 	title.show()
