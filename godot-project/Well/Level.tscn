@@ -22,7 +22,6 @@ __meta__ = {
 }
 
 [node name="PlayerSpawn" type="Position2D" parent="."]
-editor/display_folded = true
 z_index = 10
 z_as_relative = false
 __meta__ = {
@@ -32,6 +31,7 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="PlayerSpawn"]
 self_modulate = Color( 0, 0, 0, 1 )
 texture = ExtResource( 2 )
+hframes = 8
 
 [node name="Bottom" type="Position2D" parent="."]
 
