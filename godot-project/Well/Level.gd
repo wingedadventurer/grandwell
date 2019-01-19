@@ -9,6 +9,7 @@ var scene_ladder = preload("res://Well/Ladder/Ladder.tscn")
 var scene_platform = preload("res://Well/Platform/Platform.tscn")
 
 const scene_pause = preload("res://Menu/PauseScreen.tscn")
+const scene_levelcomplete = preload("res://Menu/LevelComplete.tscn")
 
 onready var well_center = $WellCenter
 
@@ -106,9 +107,11 @@ func begin_escape():
 
 func player_escaped():
 	print("Level complete")
-	LevelLoader.advance_level(number)
 	MusicPlayer.stop()
 	Get.camera().indicator_target = null
+	var level_complete = scene_levelcomplete.instance()
+	level_complete.level_number = number
+	add_child(level_complete)
 
 func player_dead():
 	$Timer_Respawn.start()
