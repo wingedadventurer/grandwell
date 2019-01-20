@@ -302,6 +302,7 @@ func hurt():
 	if invulnerable: return
 	
 	health -= 1
+	Get.camera().set_lives(health)
 	invulnerable = true
 	if health > 0:
 		$Hurt.play()

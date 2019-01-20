@@ -80,6 +80,10 @@ func _process(delta):
 	zoom_amount_actual = lerp(zoom_amount_actual, zoom_amount_target, delta/2)
 	zoom.x = zoom_amount_actual
 	zoom.y = zoom_amount_actual
+	
+	# place lives
+	var viewport_size = get_viewport_rect().size * zoom
+	$Lives.position = -viewport_size * 0.5 + offset + Vector2(24, 12)
 
 func shake(time = DEFAULT_SHAKE_TIME, strength = DEFAULT_SHAKE_STRENGTH):
 	shake_time = time
@@ -149,3 +153,8 @@ func set_target_player():
 func set_target_point(point):
 	current_target = Targets.POINT
 	target_point = point
+
+func set_lives(amount):
+	if amount > 3: amount = 3
+	elif amount < 0: amount = 0
+	$Lives.frame = 3 - amount
