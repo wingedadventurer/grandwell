@@ -24,6 +24,10 @@ func _physics_process(delta):
 		for area in get_overlapping_areas():
 			if area.is_in_group("diamond"):
 				area.toggle_active()
+		
+		for body in get_overlapping_bodies():
+			if body.is_in_group("hurtable"):
+				body.hurt()
 
 func _on_Tween_tween_completed(object, key):
 	queue_free()

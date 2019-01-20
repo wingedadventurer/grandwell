@@ -39,6 +39,8 @@ const MAX_SAFE_FALL_DISTANCE = 140
 # shooting
 var SHOOT_TIME = 0.5
 var SHOOT_SLOWMO_AMOUNT = 0.2
+var SHOOT_DELAY = 1.0
+var shoot_delay = 0
 
 const MAX_HEALTH = 3
 
@@ -69,6 +71,8 @@ func _process(delta):
 	choose_laserbeam_direction()
 	$SpriteGun.rotation = laser_beam_rotation.angle()
 	update()
+	
+	if shoot_delay > 0.0: shoot_delay -= delta
 
 func _physics_process(delta):
 	# states
@@ -79,6 +83,7 @@ func _physics_process(delta):
 	switch_states()
 	
 	check_spikes()
+	check_slimes()
 
 func _draw():
 	if state == State.SHOOTING:
@@ -257,7 +262,7 @@ func switch_states():
 		state = state_next
 
 func can_shoot():
-	return true # TODO: add shoot delay
+	return shoot_delay <= 0.0
 
 func shoot():
 	var charge_factor = 1 - shoot_time / SHOOT_TIME
@@ -273,7 +278,9 @@ func shoot():
 	
 	$Charge.stop()
 	$Shot.play()
-	Get.camera().shake(0.5 + charge_factor * 0.2, 5.0 + charge_factor * 10.0)
+	Get.camera().shake(0.5 + charge_factor * 0.2, 5.0 + charge_factor * 2.5)
+	
+	shoot_delay = SHOOT_DELAY
 	
 	$SpriteGun.visible = false
 
@@ -309,6 +316,16 @@ func check_spikes():
 		if spikes.is_in_group("spikes"):
 			hurt()
 			Get.level().get_node("SpikeStab").play()
+			velocity.y = -JUMP_STRENGTH
+			jump_time = 0.0
+			return
+
+func check_slimes():
+	if invulnerable: return
+	
+	for slime in $SlimeChecker.get_overlapping_bodies():
+		if slime.is_in_group("slime") and slime.state != slime.State.DEAD:
+			hurt()
 			velocity.y = -JUMP_STRENGTH
 			jump_time = 0.0
 			return

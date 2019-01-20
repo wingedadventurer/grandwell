@@ -36,15 +36,15 @@ func reset():
 	state = State.DESCENT
 	MusicPlayer.play_descent()
 	
-	# Reset all 'resettables'
-	var resettables = get_tree().get_nodes_in_group("resettables")
-	for current_resettable in resettables:
-		current_resettable.reset()
-	
 	# Remove all 'removables'
 	var removables = get_tree().get_nodes_in_group("removables")
 	for removable in removables:
 		removable.queue_free()
+	
+	# Reset all 'resettables'
+	var resettables = get_tree().get_nodes_in_group("resettables")
+	for current_resettable in resettables:
+		current_resettable.reset()
 	
 	Get.camera().pan_down()
 	Get.camera().indicator_target = get_bottom_position()

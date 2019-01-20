@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Enemies/Slime/Slime.png" type="Texture" id=1]
+[ext_resource path="res://Enemies/Slime/SlimeSpawner/SlimeSpawner.gd" type="Script" id=2]
+
+[node name="SlimeSpawner" type="Sprite" groups=[
+"resettables",
+]]
+modulate = Color( 0, 0, 0, 1 )
+texture = ExtResource( 1 )
+hframes = 9
+script = ExtResource( 2 )
+

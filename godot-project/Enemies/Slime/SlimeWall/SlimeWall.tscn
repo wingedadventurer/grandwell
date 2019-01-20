@@ -2,10 +2,11 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 
-extents = Vector2( 6, 60 )
+extents = Vector2( 6, 30 )
 
-[node name="InvisibleWall" type="StaticBody2D"]
-collision_mask = 0
+[node name="SlimeWall" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 16
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
