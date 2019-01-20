@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Well/Level.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
 [ext_resource path="res://Well/WaterLine.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Player/SpikeStab.wav" type="AudioStream" id=4]
+[ext_resource path="res://Well/InvisibleWall/InvisibleWall.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -20,6 +21,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Tween" type="Tween" parent="."]
 
 [node name="PlayerSpawn" type="Position2D" parent="."]
 z_index = 10
@@ -64,6 +67,9 @@ shape = SubResource( 2 )
 [node name="SpikeStab" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 bus = "SFX"
+
+[node name="DiscoveryWall" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, -60 )
 
 [connection signal="body_entered" from="DescentCheck" to="." method="_on_DescentCheck_body_entered"]
 [connection signal="body_entered" from="AscentCheck" to="." method="_on_AscentCheck_body_entered"]

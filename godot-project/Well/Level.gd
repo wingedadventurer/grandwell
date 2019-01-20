@@ -50,6 +50,8 @@ func reset():
 	Get.camera().indicator_target = get_bottom_position()
 	
 	$WaterLine.visible = false
+	$Dirt.modulate = Color(1, 1, 1)
+	$DiscoveryWall/Collision.call_deferred("set_disabled", true)
 
 func check_diamonds():
 	if state != State.DISCOVERY: return
@@ -106,6 +108,9 @@ func begin_discovery():
 	Get.camera().indicator_target = null
 	Get.camera().set_zoom_amount(0.5)
 	Get.camera().set_target_point(well_center)
+	$Tween.interpolate_property($Dirt, "modulate", Color(1, 1, 1), Color(0, 0, 0), 1.5, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	$Tween.start()
+	$DiscoveryWall/Collision.call_deferred("set_disabled", false)
 
 func begin_escape():
 	print("Ascent phase started")
@@ -113,10 +118,13 @@ func begin_escape():
 	MusicPlayer.play_ascent()
 	Get.camera().pan_up()
 	Get.camera().indicator_target = get_top_position()
-	Get.camera().set_zoom_amount(0.3)
+	Get.camera().set_zoom_amount(0.4)
 	Get.camera().set_target_player()
 	$WaterLine.rising = true
 	$WaterLine.show()
+	$Tween.interpolate_property($Dirt, "modulate", Color(0, 0, 0), Color(1, 1, 1), 1.5, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	$Tween.start()
+	$DiscoveryWall/Collision.call_deferred("set_disabled", true)
 
 func player_escaped():
 	print("Level complete")

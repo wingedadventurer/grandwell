@@ -27,7 +27,7 @@ var gravity_scale
 
 # climbing
 var GRAB_DELAY = 0.1
-var CLIMB_SPEED = 100.0
+var CLIMB_SPEED = 80.0
 
 # jumping
 var jump_start_y = 0 	# For the sake of determining if we take fall damage,

@@ -2,7 +2,7 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 
-extents = Vector2( 6, 60 )
+extents = Vector2( 6, 6 )
 
 [node name="InvisibleWall" type="StaticBody2D"]
 collision_mask = 0
