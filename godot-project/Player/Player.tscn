@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
@@ -131,6 +131,22 @@ extents = Vector2( 4, 8 )
 
 extents = Vector2( 4, 8 )
 
+[sub_resource type="Animation" id=12]
+
+resource_name = "invulnerability"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true ]
+}
+
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
@@ -231,6 +247,9 @@ collision_mask = 16
 
 [node name="Collision" type="CollisionShape2D" parent="SlimeChecker"]
 shape = SubResource( 11 )
+
+[node name="Invulnerability" type="AnimationPlayer" parent="."]
+anims/invulnerability = SubResource( 12 )
 
 [connection signal="animation_finished" from="Movement" to="." method="_on_Movement_animation_finished"]
 [connection signal="timeout" from="Timer_Invulnerability" to="." method="_on_Timer_Invulnerability_timeout"]

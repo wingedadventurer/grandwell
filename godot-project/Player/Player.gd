@@ -306,6 +306,7 @@ func hurt():
 	if health > 0:
 		$Hurt.play()
 		$Timer_Invulnerability.start()
+		$Invulnerability.play("invulnerability")
 	else:
 		die()
 
