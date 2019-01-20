@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Lives.png-463e0f838563d862795ce17ec859834d.stex"
+path="res://.import/Health.png-c5fbffdf36484eab3978231060bb963d.stex"
 
 [deps]
 
-source_file="res://Player/Lives.png"
-dest_files=[ "res://.import/Lives.png-463e0f838563d862795ce17ec859834d.stex" ]
+source_file="res://Player/Health.png"
+dest_files=[ "res://.import/Health.png-c5fbffdf36484eab3978231060bb963d.stex" ]
 
 [params]
 

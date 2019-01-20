@@ -52,7 +52,7 @@ func reset():
 	$WaterLine.visible = false
 	$Dirt.modulate = Color(1, 1, 1)
 	$DiscoveryWall/Collision.call_deferred("set_disabled", true)
-	Get.camera().set_lives(3)
+	Get.camera().set_health(3)
 
 func check_diamonds():
 	if state != State.DISCOVERY: return

@@ -81,9 +81,10 @@ func _process(delta):
 	zoom.x = zoom_amount_actual
 	zoom.y = zoom_amount_actual
 	
-	# place lives
+	# place bars
 	var viewport_size = get_viewport_rect().size * zoom
-	$Lives.position = -viewport_size * 0.5 + offset + Vector2(24, 12)
+	$Health.position = -viewport_size * 0.5 + offset + Vector2(24, 12)
+	$Charge.position = $Health.position + Vector2(0, 12)
 
 func shake(time = DEFAULT_SHAKE_TIME, strength = DEFAULT_SHAKE_STRENGTH):
 	shake_time = time
@@ -154,7 +155,12 @@ func set_target_point(point):
 	current_target = Targets.POINT
 	target_point = point
 
-func set_lives(amount):
+func set_health(amount):
 	if amount > 3: amount = 3
 	elif amount < 0: amount = 0
-	$Lives.frame = 3 - amount
+	$Health.frame = 3 - amount
+
+func set_charge(amount):
+	if amount > 3: amount = 3
+	elif amount < 0: amount = 0
+	$Charge.frame = 3 - amount

@@ -73,6 +73,7 @@ func _process(delta):
 	update()
 	
 	if shoot_delay > 0.0: shoot_delay -= delta
+	Get.camera().set_charge(int((1 - shoot_delay / SHOOT_DELAY) * 4) - 1)
 
 func _physics_process(delta):
 	# states
@@ -87,7 +88,8 @@ func _physics_process(delta):
 
 func _draw():
 	if state == State.SHOOTING:
-		draw_circle(Vector2(), shoot_time * 30.0 + 10.0, Color(1.0, 0.2, 0.2, 0.5))
+#		draw_circle(Vector2(), shoot_time * 30.0 + 10.0, Color(1.0, 0.2, 0.2, 0.5))
+		pass
 
 func state_normal(delta):
 	# calculating horizontal velocity
@@ -302,7 +304,7 @@ func hurt():
 	if invulnerable: return
 	
 	health -= 1
-	Get.camera().set_lives(health)
+	Get.camera().set_health(health)
 	invulnerable = true
 	if health > 0:
 		$Hurt.play()
