@@ -156,6 +156,9 @@ __meta__ = {
 }
 
 [node name="Messages" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [connection signal="timeout" from="Timer_Respawn" to="." method="_on_Timer_Respawn_timeout"]
 [connection signal="body_entered" from="DescentCheck" to="." method="_on_DescentCheck_body_entered"]

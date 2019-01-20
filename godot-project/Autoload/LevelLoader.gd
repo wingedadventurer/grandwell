@@ -6,7 +6,19 @@ var levels = {
 		"next_level": 2
 	},
 	2: {
-		"scene": "res://Levels/Leve02.tscn",
+		"scene": "res://Levels/Level02.tscn",
+		"next_level": 3
+	},
+	3: {
+		"scene": "res://Levels/Level03.tscn",
+		"next_level": 4
+	},
+	4: {
+		"scene": "res://Levels/Level03.tscn",
+		"next_level": 5
+	},
+	5: {
+		"scene": "res://Levels/Level03.tscn",
 		"next_level": null
 	}
 }

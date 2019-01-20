@@ -4,6 +4,9 @@ tool
 export var active = false setget set_active
 onready var init_active = active
 
+func _ready():
+	randomize()
+
 func set_active(value):
 	if not has_node("Sprite"): return
 	

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Well/Level.tscn" type="PackedScene" id=1]
+
+[node name="Level" index="0" instance=ExtResource( 1 )]
+number = 5
+
