@@ -1,6 +1,6 @@
 extends Polygon2D
 
-const RISE_SPEED = 40
+export var RISE_SPEED = 40
 
 var rising = false
 

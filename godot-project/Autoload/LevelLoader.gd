@@ -2,11 +2,11 @@ extends Node
 
 var levels = {
 	1: {
-		"scene": "res://Levels/LevelTest.tscn",
+		"scene": "res://Levels/Level01.tscn",
 		"next_level": 2
 	},
 	2: {
-		"scene": "res://Levels/Level2.tscn",
+		"scene": "res://Levels/Leve02.tscn",
 		"next_level": null
 	}
 }

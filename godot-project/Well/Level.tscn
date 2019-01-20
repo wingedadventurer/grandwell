@@ -1,16 +1,17 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Well/Level.gd" type="Script" id=1]
 [ext_resource path="res://Well/WaterLine.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/SpikeStab.wav" type="AudioStream" id=3]
-[ext_resource path="res://Tilesets and textures/Backgrounds.tres" type="TileSet" id=4]
-[ext_resource path="res://Tilesets and textures/Walls.tres" type="TileSet" id=5]
-[ext_resource path="res://Tilesets and textures/Platforms.tres" type="TileSet" id=6]
-[ext_resource path="res://Tilesets and textures/Ladders.tres" type="TileSet" id=7]
-[ext_resource path="res://Tilesets and textures/Spikes.tres" type="TileSet" id=8]
-[ext_resource path="res://Tilesets and textures/Crystal.tres" type="TileSet" id=9]
-[ext_resource path="res://Player/Player.png" type="Texture" id=10]
-[ext_resource path="res://Well/InvisibleWall/InvisibleWall.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Tilesets and textures/Dirt.tres" type="TileSet" id=4]
+[ext_resource path="res://Tilesets and textures/Backgrounds.tres" type="TileSet" id=5]
+[ext_resource path="res://Tilesets and textures/Walls.tres" type="TileSet" id=6]
+[ext_resource path="res://Tilesets and textures/Platforms.tres" type="TileSet" id=7]
+[ext_resource path="res://Tilesets and textures/Ladders.tres" type="TileSet" id=8]
+[ext_resource path="res://Tilesets and textures/Spikes.tres" type="TileSet" id=9]
+[ext_resource path="res://Tilesets and textures/Crystal.tres" type="TileSet" id=10]
+[ext_resource path="res://Player/Player.png" type="Texture" id=11]
+[ext_resource path="res://Well/InvisibleWall/InvisibleWall.tscn" type="PackedScene" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -39,13 +40,6 @@ stream = ExtResource( 3 )
 bus = "SFX"
 
 [node name="Dirt" type="TileMap" parent="."]
-cell_size = Vector2( 12, 12 )
-format = 1
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Backgrounds" type="TileMap" parent="."]
 tile_set = ExtResource( 4 )
 cell_size = Vector2( 12, 12 )
 format = 1
@@ -53,7 +47,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Walls" type="TileMap" parent="."]
+[node name="Backgrounds" type="TileMap" parent="."]
 tile_set = ExtResource( 5 )
 cell_size = Vector2( 12, 12 )
 format = 1
@@ -61,8 +55,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Platforms" type="TileMap" parent="."]
+[node name="Walls" type="TileMap" parent="."]
 tile_set = ExtResource( 6 )
+cell_size = Vector2( 12, 12 )
+format = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Platforms" type="TileMap" parent="."]
+tile_set = ExtResource( 7 )
 cell_size = Vector2( 12, 12 )
 format = 1
 __meta__ = {
@@ -71,14 +73,6 @@ __meta__ = {
 
 [node name="Ladders" type="TileMap" parent="."]
 position = Vector2( 6, 6 )
-tile_set = ExtResource( 7 )
-cell_size = Vector2( 12, 12 )
-format = 1
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Spikes" type="TileMap" parent="."]
 tile_set = ExtResource( 8 )
 cell_size = Vector2( 12, 12 )
 format = 1
@@ -86,8 +80,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Crystals" type="TileMap" parent="."]
+[node name="Spikes" type="TileMap" parent="."]
 tile_set = ExtResource( 9 )
+cell_size = Vector2( 12, 12 )
+format = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Crystals" type="TileMap" parent="."]
+tile_set = ExtResource( 10 )
 cell_size = Vector2( 12, 12 )
 format = 1
 __meta__ = {
@@ -104,7 +106,7 @@ __meta__ = {
 
 [node name="Sprite" type="Sprite" parent="PlayerSpawn"]
 self_modulate = Color( 0, 0, 0, 1 )
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 hframes = 8
 
 [node name="Bottom" type="Position2D" parent="."]
@@ -118,13 +120,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="DiscoveryWall" parent="." instance=ExtResource( 11 )]
+[node name="DiscoveryWall" parent="." instance=ExtResource( 12 )]
 position = Vector2( 0, -60 )
 
 [node name="DescentCheck" type="Area2D" parent="."]
 editor/display_folded = true
 z_index = 60
 z_as_relative = false
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Collision" type="CollisionShape2D" parent="DescentCheck"]
 shape = SubResource( 1 )
@@ -133,6 +138,9 @@ shape = SubResource( 1 )
 editor/display_folded = true
 z_index = 60
 z_as_relative = false
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Collision" type="CollisionShape2D" parent="AscentCheck"]
 shape = SubResource( 2 )
@@ -146,6 +154,8 @@ __meta__ = {
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Messages" type="Node2D" parent="."]
 
 [connection signal="timeout" from="Timer_Respawn" to="." method="_on_Timer_Respawn_timeout"]
 [connection signal="body_entered" from="DescentCheck" to="." method="_on_DescentCheck_body_entered"]
